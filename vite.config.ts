@@ -43,7 +43,7 @@ export default ({ mode: VITE_MODE }: { mode: string }) => {
   )
 
   return defineConfig({
-    root: './',
+    root: './cesium-vite-demo/',
     base:'/cesium-vite-demo/',
     assetsInclude:['**/*.gltf'],
     build: {
