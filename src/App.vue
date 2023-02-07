@@ -1,12 +1,13 @@
 <template>
   <div class="common-layout">
     <MenuBar></MenuBar>
+    <current-camera v-if="viewerLoaded"></current-camera>
     <div ref="containerRef" id="cesiumContainer"></div>
     <div ref="unvisibleCreditRef" v-show="false"></div>
-    <digTerrian ref="digTerrianRef"  v-if="activeMenuKey === 'digTerrian'" />
-    <groundTransparent ref="groundTransparentRef" v-if="activeMenuKey === 'groundTransparent'"/>
-    <addModel ref="addModelRef" v-if="activeMenuKey === 'addModel'"/>
-    <current-camera v-if="viewerLoaded"></current-camera>
+    <digTerrian ref="DigTerrianRef"  v-if="activeMenuKey === 'DigTerrian'" />
+    <groundTransparent ref="GroundTransparentRef" v-if="activeMenuKey === 'GroundTransparent'"/>
+    <addModel ref="AddModelRef" v-if="activeMenuKey === 'AddModel'"/>
+    <czmlPower ref="CzmlPowerRef" v-if="activeMenuKey === 'CzmlPower'"></czmlPower>
   </div>
 </template>
 
@@ -16,10 +17,11 @@ import { ArcGisMapServerImageryProvider, Camera, Viewer, Rectangle } from 'cesiu
 import * as Cesium from 'cesium'
 import { useSysStore } from '@/store/sys'
 import MenuBar from '@/components/MenuBar.vue'
-import digTerrian from "@/components/digTerrian.vue";
-import groundTransparent from "@/components/groundTransparent.vue";
+import digTerrian from "@/components/DigTerrian.vue";
+import groundTransparent from "@/components/GroundTransparent.vue";
 import currentCamera from '@/components/currentCamera.vue'
-import AddModel from "@/components/AddModel/addModel.vue";
+import AddModel from "@/components/AddModel/AddModel.vue";
+import CzmlPower from '@/components/CzmlPower/CzmlPrower.vue'
 
 
 const containerRef = ref<HTMLDivElement>()
@@ -27,11 +29,12 @@ const unvisibleCreditRef = ref<HTMLDivElement>()
 let activeMenuKey = ref<String>('')
 const sysStore = useSysStore()
 // 组件ref注册
-const digTerrianRef = ref(null)
-const groundTransparentRef = ref(null)
-const addModelRef = ref(null)
+const DigTerrianRef = ref(null)
+const GroundTransparentRef = ref(null)
+const AddModelRef = ref(null)
+const CzmlPowerRef = ref(null)
 const refsObj = {
-  digTerrianRef,groundTransparentRef,addModelRef
+  DigTerrianRef,GroundTransparentRef,AddModelRef,CzmlPowerRef
 }
 let viewerLoaded = false
 let entity:any
@@ -129,7 +132,7 @@ watch(
       activeMenuKey.value = newCurrentComponentKey
     }
 )
-sysStore.setCurrentComponentKey('digTerrian')
+sysStore.setCurrentComponentKey('DigTerrian')
 
 
 </script>

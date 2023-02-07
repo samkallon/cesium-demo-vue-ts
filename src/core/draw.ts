@@ -79,6 +79,7 @@ export class Draw {
       floatingPoint = undefined;
       activeShape = undefined;
       activeShapePoints = [];
+      that.drawStatus = 'stop'
     }
 
     const handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);

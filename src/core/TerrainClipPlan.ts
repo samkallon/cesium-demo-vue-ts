@@ -44,7 +44,7 @@ TerrainClipPlan.prototype.updateData = function (pointList: any) {
         pointLength = pointList.length,
         a = new Cesium.Cartesian3,
         n = Cesium.Cartesian3.subtract(pointList[0], pointList[1], a);
-        n = n.x > 0, this.excavateMinHeight = 9999;
+    if (n.x > 0) this.excavateMinHeight = 9999;
     for (let i = 0; i < pointLength; ++i) {
         var nextPointIndex = (i + 1) % pointLength,
         u = Cesium.Cartographic.fromCartesian(pointList[i]),
@@ -68,7 +68,7 @@ TerrainClipPlan.prototype.updateData = function (pointList: any) {
     }
     this.viewer.scene.globe.clippingPlanes = new Cesium.ClippingPlaneCollection({
         planes: t,
-        edgeWidth: 1,
+        edgeWidth: 0,
         edgeColor: Cesium.Color.WHITE,
         enabled: true
     }), this._prepareWell(pointList), this._createWell(this.wellData)

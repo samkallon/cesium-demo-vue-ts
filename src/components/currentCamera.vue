@@ -76,6 +76,7 @@ const copyCameraData = () => {
 
 <style scoped lang="scss">
 .camera-info {
+  z-index: 9;
   width: 100%;
   height: 40px;
   background-color: rgba(0, 0, 0, 0.52);
@@ -90,7 +91,7 @@ const copyCameraData = () => {
     width:120px;
   }
   div:nth-last-child(-n + 3){
-    width:100px;
+    width:110px;
   }
   button{
   }

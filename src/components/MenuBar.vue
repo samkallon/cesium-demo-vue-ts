@@ -15,14 +15,17 @@
         :mode="mode"
         :theme="theme"
     >
-      <a-menu-item key="digTerrian">
+      <a-menu-item key="DigTerrian">
         地形开挖
       </a-menu-item>
-      <a-menu-item key="addModel">
+      <a-menu-item key="AddModel">
         模型加载
       </a-menu-item>
-      <a-menu-item key="groundTransparent">
+      <a-menu-item key="GroundTransparent">
         地表透明
+      </a-menu-item>
+      <a-menu-item key="CzmlPower">
+        czml驱动
       </a-menu-item>
 
 <!--      <a-menu-item key="fly">-->
@@ -85,7 +88,7 @@ export default defineComponent({
     const state = reactive({
       mode: 'inline' as MenuMode,
       theme: 'dark' as MenuTheme,
-      selectedKeys: ['digTerrian'],
+      selectedKeys: ['DigTerrian'],
       openKeys: [''],
       bgColor: '#001529',
       fontColor: '#fff'
