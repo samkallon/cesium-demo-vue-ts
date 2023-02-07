@@ -6,8 +6,8 @@
         name="nest-messages"
         @finish="onFinish"
     >
-      <a-form-item :name="['depth']" label="开挖深度" :rules="[{ required: true }]">
-        <a-input v-model:value="formState.depth"/>
+      <a-form-item :name="['depth']" :rules="[{ required: true }]">
+        <fc-typing-input style="margin: 0px 16px" v-model="formState.depth" placeholder="请输入开挖深度"/>
       </a-form-item>
       <div class="btn-group">
         <a-button type="primary" @click="startDraw">开始绘制</a-button>
@@ -85,21 +85,27 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .dig-contain {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
   width: 15vw;
-  height: 12vh;
+  height: 13vh;
   position: fixed;
   left: 15vw;
   top: 1vw;
   padding: 8px;
   // 毛玻璃效果
-  background: rgba(255, 255, 255, .7);
+  background: rgba(255, 255, 255, 0.79);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(5px);
   border-radius: 5px;
   .btn-group{
-    margin: 0 20px;
     display: flex;
     justify-content: space-between;
+  }
+  fc-typing-input{
+    --color: rgb(24, 143, 253);
   }
 }
 

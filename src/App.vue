@@ -52,7 +52,7 @@ onMounted(() => {
     baseLayerPicker: true, // 底图选择器 右上角
     navigationHelpButton: false, // 右上角用户帮助
     fullscreenButton: false, // 全屏按钮
-    infoBox: false, // 版权信息
+    infoBox: true,
     creditContainer: unvisibleCreditRef.value,
     imageryProvider: new ArcGisMapServerImageryProvider({
       url: `https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer`
