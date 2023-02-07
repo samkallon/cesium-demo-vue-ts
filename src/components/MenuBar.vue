@@ -22,54 +22,54 @@
         模型加载
       </a-menu-item>
       <a-menu-item key="groundTransparent">
-        地表透明1
+        地表透明
       </a-menu-item>
 
-      <a-menu-item key="fly">
-        飞行漫游
-      </a-menu-item>
-      <a-menu-item key="dynamicWall">
-        动态墙体
-      </a-menu-item>
-      <a-menu-item key="dynamicWall">
-        dom-点扩散
-      </a-menu-item>
-      <a-menu-item key="dynamicWall">
-        多场景同步，二三维地图同步，鹰眼
-<!--        https://sandcastle.cesium.com/?src=Multiple%20Synced%20Views.html-->
-      </a-menu-item>
-      <a-menu-item key="dynamicWall">
-        坡度坡向等高线
-<!--        https://sandcastle.cesium.com/?src=Globe%20Materials.html-->
-      </a-menu-item>
-      <a-menu-item key="dynamicWall">
-        3dtile颜色修改
-<!--        https://sandcastle.cesium.com/?src=3D%20Tiles%20Batch%20Table%20Hierarchy.html-->
-      </a-menu-item>
-      <a-menu-item key="dynamicWall">
-        3D tiles的裁切，用于做剖面分析，管线开挖分析
-        <!--https://sandcastle.cesium.com/?src=3D%20Tiles%20Clipping%20Planes.html-->
-      </a-menu-item>
-      <a-menu-item key="dynamicWall">
-        3D tiles简模，图形拾取，图形轮廓线，简模属性表格显示，名称div跟随鼠标显示
-        <!--https://sandcastle.cesium.com/?src=3D%20Tiles%20Feature%20Picking.html-->
-      </a-menu-item>
-      <a-menu-item key="dynamicWall">
-        粒子系统
-        <!--https://sandcastle.cesium.com/?src=Particle%20System%20Fireworks.html-->
-      </a-menu-item>
-      <a-menu-item key="dynamicWall">
-        材质集中示例
-        <!--https://sandcastle.cesium.com/?src=Materials.html-->
-      </a-menu-item>
-      <a-menu-item key="dynamicWall">
-        等高线材质
-        <!--https://sandcastle.cesium.com/?src=Elevation%20Band%20Material.html-->
-      </a-menu-item>
-      <a-menu-item key="dynamicWall">
-        视频材质
-        <!--https://sandcastle.cesium.com/?src=Video.html-->
-      </a-menu-item>
+<!--      <a-menu-item key="fly">-->
+<!--        飞行漫游-->
+<!--      </a-menu-item>-->
+<!--      <a-menu-item key="dynamicWall">-->
+<!--        动态墙体-->
+<!--      </a-menu-item>-->
+<!--      <a-menu-item key="dynamicWall">-->
+<!--        dom-点扩散-->
+<!--      </a-menu-item>-->
+<!--      <a-menu-item key="dynamicWall">-->
+<!--        多场景同步，二三维地图同步，鹰眼-->
+<!--&lt;!&ndash;        https://sandcastle.cesium.com/?src=Multiple%20Synced%20Views.html&ndash;&gt;-->
+<!--      </a-menu-item>-->
+<!--      <a-menu-item key="dynamicWall">-->
+<!--        坡度坡向等高线-->
+<!--&lt;!&ndash;        https://sandcastle.cesium.com/?src=Globe%20Materials.html&ndash;&gt;-->
+<!--      </a-menu-item>-->
+<!--      <a-menu-item key="dynamicWall">-->
+<!--        3dtile颜色修改-->
+<!--&lt;!&ndash;        https://sandcastle.cesium.com/?src=3D%20Tiles%20Batch%20Table%20Hierarchy.html&ndash;&gt;-->
+<!--      </a-menu-item>-->
+<!--      <a-menu-item key="dynamicWall">-->
+<!--        3D tiles的裁切，用于做剖面分析，管线开挖分析-->
+<!--        &lt;!&ndash;https://sandcastle.cesium.com/?src=3D%20Tiles%20Clipping%20Planes.html&ndash;&gt;-->
+<!--      </a-menu-item>-->
+<!--      <a-menu-item key="dynamicWall">-->
+<!--        3D tiles简模，图形拾取，图形轮廓线，简模属性表格显示，名称div跟随鼠标显示-->
+<!--        &lt;!&ndash;https://sandcastle.cesium.com/?src=3D%20Tiles%20Feature%20Picking.html&ndash;&gt;-->
+<!--      </a-menu-item>-->
+<!--      <a-menu-item key="dynamicWall">-->
+<!--        粒子系统-->
+<!--        &lt;!&ndash;https://sandcastle.cesium.com/?src=Particle%20System%20Fireworks.html&ndash;&gt;-->
+<!--      </a-menu-item>-->
+<!--      <a-menu-item key="dynamicWall">-->
+<!--        材质集中示例-->
+<!--        &lt;!&ndash;https://sandcastle.cesium.com/?src=Materials.html&ndash;&gt;-->
+<!--      </a-menu-item>-->
+<!--      <a-menu-item key="dynamicWall">-->
+<!--        等高线材质-->
+<!--        &lt;!&ndash;https://sandcastle.cesium.com/?src=Elevation%20Band%20Material.html&ndash;&gt;-->
+<!--      </a-menu-item>-->
+<!--      <a-menu-item key="dynamicWall">-->
+<!--        视频材质-->
+<!--        &lt;!&ndash;https://sandcastle.cesium.com/?src=Video.html&ndash;&gt;-->
+<!--      </a-menu-item>-->
     </a-menu>
   </div>
 </template>
