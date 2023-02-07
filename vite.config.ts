@@ -3,7 +3,7 @@ import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
 import htmlConfig from 'vite-plugin-html-config'
-import { viteExternalsPlugin } from 'vite-plugin-externals'
+import { viteExternalsPlugin } from 'vite-plugin-externals/dist/src'
 
 // https://vitejs.dev/config/
 export default ({ mode: VITE_MODE }: { mode: string }) => {
