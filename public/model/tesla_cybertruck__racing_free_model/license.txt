@@ -1,0 +1,11 @@
+Model Information:
+* title:	Tesla Cybertruck  Racing (free model )
+* source:	https://sketchfab.com/3d-models/tesla-cybertruck-racing-free-model-9826aff31f7c421b9a7de6bb78d5d4a7
+* author:	javadbayat (https://sketchfab.com/javadbayat)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Tesla Cybertruck  Racing (free model )" (https://sketchfab.com/3d-models/tesla-cybertruck-racing-free-model-9826aff31f7c421b9a7de6bb78d5d4a7) by javadbayat (https://sketchfab.com/javadbayat) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
