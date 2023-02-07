@@ -19,7 +19,7 @@ import MenuBar from '@/components/MenuBar.vue'
 import digTerrian from "@/components/digTerrian.vue";
 import groundTransparent from "@/components/groundTransparent.vue";
 import currentCamera from '@/components/currentCamera.vue'
-import AddModel from "@/components/addModel.vue";
+import AddModel from "@/components/AddModel/addModel.vue";
 
 
 const containerRef = ref<HTMLDivElement>()

@@ -7,6 +7,9 @@
 </template>
 
 <script setup lang="ts">
+import modelx from './model/tesla_model_x/scene.gltf'
+import models from './model/tesla_model_s_plaid_2021/scene.gltf'
+import cybertruck from './model/tesla_cybertruck__racing_free_model/scene.gltf'
 import { useSysStore } from '@/store/sys'
 import * as Cesium from 'cesium'
 import {Cartesian3} from "cesium";
@@ -16,7 +19,7 @@ const viewer = sysStore.$state.cesiumViewer
 const cesiumUtils = new CesiumUtils(viewer)
 const DIC = [
   {
-    url:'./model/tesla_model_x/scene.gltf',
+    url: modelx,
     position:Cesium.Cartesian3.fromDegrees(
         -3.81612084,
         53.12392085,
@@ -25,7 +28,7 @@ const DIC = [
     scale:2
   },
   {
-    url:'./model/tesla_model_s_plaid_2021/scene.gltf',
+    url:models,
     position:Cesium.Cartesian3.fromDegrees(
         -3.81516510,
         53.12418585,
@@ -34,7 +37,7 @@ const DIC = [
     scale:0.020
   },
   {
-    url:'./model/tesla_cybertruck__racing_free_model/scene.gltf',
+    url:cybertruck,
     position:Cesium.Cartesian3.fromDegrees(
         -3.81732846,
         53.12397809,
@@ -78,15 +81,15 @@ const createModel = (type: number) => {
       },
     });
 
-    // viewer.flyTo(entity)
+    viewer.flyTo(entity)
   }
 }
 
 const clear = () => {
   if (viewer){
-    viewer.entities.removeById('Model_x')
-    viewer.entities.removeById('Model_s')
-    viewer.entities.removeById('Model_c')
+    viewer.entities.removeById('Model_0')
+    viewer.entities.removeById('Model_1')
+    viewer.entities.removeById('Model_2')
   }
 }
 
