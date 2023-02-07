@@ -1,0 +1,34 @@
+{
+  "name": "vue3-ts-cesium-starter",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "postinstall": "node static-copy.js",
+    "static-copy": "node static-copy.js",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@turf/boolean-clockwise": "^6.5.0",
+    "ant-design-vue": "^3.2.15",
+    "fancy-components": "^0.0.23",
+    "pinia": "^2.0.18",
+    "turf": "^3.0.14",
+    "vue": "^3.2.37"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.6",
+    "@vitejs/plugin-vue": "^3.0.3",
+    "@vue/compiler-sfc": "^3.2.37",
+    "cesium": "^1.96.0",
+    "del": "^7.0.0",
+    "recursive-copy": "^2.0.14",
+    "sass": "^1.57.1",
+    "typescript": "^4.7.4",
+    "vite": "^3.0.8",
+    "vite-plugin-externals": "^0.5.1",
+    "vite-plugin-html-config": "^1.0.9",
+    "vue-tsc": "^0.40.1"
+  }
+}
