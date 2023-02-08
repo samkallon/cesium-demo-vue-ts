@@ -18,9 +18,9 @@
       <a-menu-item key="DigTerrian">
         地形开挖
       </a-menu-item>
-      <a-menu-item key="AddModel">
-        模型加载
-      </a-menu-item>
+<!--      <a-menu-item key="AddModel">-->
+<!--        模型加载-->
+<!--      </a-menu-item>-->
       <a-menu-item key="GroundTransparent">
         地表透明
       </a-menu-item>

@@ -1,8 +1,13 @@
 import models from '/model/tesla_model_s_plaid_2021/scene.gltf?url'
+import modelPlane from '/model/stylized_ww1_plane/scene.gltf?url'
+import * as Cesium from 'cesium'
+import {Cartesian3} from "cesium";
 
 let baseTime = new Date('2018-07-19T15:18:00Z')
-let czml:any;
-czml = [
+let endTime = ''
+
+
+let czmlCar = [
     {
         id: "document",
         version: "1.0",
@@ -31,7 +36,36 @@ czml = [
     },
 ]
 
-let pointList = [
+let czmlPlane = [
+    {
+        id: "document",
+        version: "1.0",
+        clock: {
+            interval: "2018-07-19T15:18:00Z/2018-07-19T16:15:30.000Z",
+            currentTime: "2018-07-19T15:18:00Z",
+            multiplier: 1,
+            range: "LOOP_STOP",
+            step: "SYSTEM_CLOCK_MULTIPLIER"
+        }
+    },
+    {
+        id: "plane1",
+        model: {
+            gltf: modelPlane,
+            scale: 10,
+            minimumPixelSize: 20,
+            maximumScale: 200000,
+        },
+        position: {
+            interpolationAlgorithm: "LINEAR",
+            forwardExtrapolationType: "HOLD",
+            cartesian: [
+            ]
+        }
+    },
+]
+
+let pointListCar = [
     {
         "x": -4131105.8979556584,
         "y": 2896972.147818016,
@@ -728,11 +762,62 @@ let pointList = [
         "z": -3889839.5886546266
     }
 ]
+let pointListPlane = [
+    {
+        "x": -4131308.382387428,
+        "y": 2895872.101504785,
+        "z": -3889162.520375158
+    },
+    {
+        "x": -4131027.687853612,
+        "y": 2896742.703867785,
+        "z": -3888779.186959942
+    },
+    {
+        "x": -4130590.60300973,
+        "y": 2895922.812243236,
+        "z": -3889812.7469981275
+    },
+    {
+        "x": -4130001.0261121006,
+        "y": 2896186.273694514,
+        "z": -3890235.3923596283
+    },
+    {
+        "x": -4130452.2182880356,
+        "y": 2896905.2661027918,
+        "z": -3889279.731102912
+    }
+]
 
-let currentTime = new Date(baseTime.getTime())
-pointList.forEach((e,i)=>{
-    const data = new Date(currentTime.getTime() + i * 5 * 1000)
-    czml[1].position.cartesian.push(data.toISOString(),e.x,e.y,e.z)
+pointListCar.forEach((e,i)=>{
+    let date
+    if (i>80){
+        date = new Date(baseTime.getTime() + (i-81) * 5 * 1000)
+        // @ts-ignore
+        czmlCar[1].position.cartesian.push(date.toISOString(),e.x,e.y,e.z)
+    }
+    if (i === pointListCar.length - 1 && date){
+        endTime = date.toISOString()
+        // @ts-ignore
+        czmlCar[0].clock.interval = baseTime.toISOString()+'/'+endTime
+    }
 })
 
-export default czml
+pointListPlane.map(e=>{
+    let latlng = Cesium.Cartographic.fromCartesian(<Cartesian3>e)
+    return Cesium.Cartesian3.fromDegrees(Cesium.Math.toDegrees(latlng.longitude),Cesium.Math.toDegrees(latlng.latitude),100)
+}).forEach((item,index)=>{
+    let date = new Date(baseTime.getTime() + index * 10 * 1000)
+    // @ts-ignore
+    czmlPlane[1].position.cartesian.push(date.toISOString(),item.x,item.y,item.z)
+    if (index === pointListPlane.length - 1 && date){
+        endTime = date.toISOString()
+        // @ts-ignore
+        czmlPlane[0].clock.interval = baseTime.toISOString()+'/'+endTime
+    }
+})
+
+
+
+export default {czmlCar,czmlPlane}

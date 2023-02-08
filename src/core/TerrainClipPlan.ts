@@ -71,7 +71,20 @@ TerrainClipPlan.prototype.updateData = function (pointList: any) {
         edgeWidth: 0,
         edgeColor: Cesium.Color.WHITE,
         enabled: true
-    }), this._prepareWell(pointList), this._createWell(this.wellData)
+    })
+    if (window.tileset69380){
+        const clipTileset = new Cesium.ClippingPlaneCollection({
+            planes: t,
+            edgeWidth: 1,
+            edgeColor: Cesium.Color.WHITE,
+            modelMatrix: Cesium.Matrix4.inverse(
+                Cesium.Transforms.eastNorthUpToFixedFrame(window.tileset69380.boundingSphere.center),
+                new Cesium.Matrix4()
+            )
+        })
+        window.tileset69380.clippingPlanes = clipTileset
+    }
+    this._prepareWell(pointList), this._createWell(this.wellData)
 }
 
 TerrainClipPlan.prototype.clear = function () {
@@ -82,6 +95,9 @@ TerrainClipPlan.prototype.clear = function () {
             this.viewer.scene.globe.clippingPlanes.removeAll()
             // this.viewer.scene.globe.clippingPlanes.destroy()
         }
+    }
+    if (window?.tileset69380?.clippingPlanes?.removeAll){
+        window.tileset69380.clippingPlanes.removeAll()
     }
     if(this.bottomSurface){
         this.viewer.scene.primitives.remove(this.bottomSurface)

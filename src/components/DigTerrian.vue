@@ -33,6 +33,37 @@ export default defineComponent({
     let entity:any
     let viewer:any
     viewer = sysStore.cesiumViewer
+
+    if (viewer) {
+      const longitude = -3.82518;
+      const latitude = 53.11728;
+      const height = 72.8;
+      const position = Cesium.Cartesian3.fromDegrees(
+          longitude,
+          latitude,
+          height
+      );
+      entity = viewer.entities.add({
+        name: 'parcleadMine',
+        position: position,
+        model: {
+          uri: 'ParcLeadMine.glb',
+        },
+      });
+      viewer.scene.camera.setView({
+        destination: new Cesium.Cartesian3(
+            3827270.552916987,
+            -255123.18143177085,
+            5079147.091351856
+        ),
+        orientation: new Cesium.HeadingPitchRoll(
+            3.2624281242239963,
+            -0.22213535190506972,
+            6.282786783842843
+        )
+      });
+    }
+
     const layout = {
       labelCol: {span: 8},
       wrapperCol: {span: 16},
