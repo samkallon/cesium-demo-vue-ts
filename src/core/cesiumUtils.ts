@@ -60,4 +60,18 @@ export class CesiumUtils {
         ); // 向量相减，得到世界坐标下的平移向量
         return Cesium.Matrix4.fromTranslation(world_translation); // 构造平移矩阵并赋值
     }
+
+    /**
+     * 旋转xyz三个方向的角度,单位为degree
+     * @param rotate
+     */
+    getRotateMatrix4(rotate:Cartesian3){
+        const mat3RoateX = Cesium.Matrix3.fromRotationX(rotate.x)
+        // const mat3RoateY = Cesium.Matrix3.fromRotationY(rotate.y)
+        // const mat3RoateZ = Cesium.Matrix3.fromRotationZ(rotate.z)
+        // let mat4 = Cesium.Matrix4.multiply(mat3RoateX,mat3RoateY,new Cesium.Matrix4())
+        // mat4 = Cesium.Matrix4.multiply(mat4,mat3RoateZ,new Cesium.Matrix4())
+        let mat4 = Cesium.Matrix4.fromRotationTranslation(mat3RoateX)
+        return mat4
+    }
 }

@@ -78,6 +78,7 @@ onMounted(() => {
   const rawViewer = markRaw(viewer)
   sysStore.setCesiumViewer(rawViewer)
   viewerLoaded = true
+  window.viewer = rawViewer
 
   const handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas)
   window.pickPointArray = []

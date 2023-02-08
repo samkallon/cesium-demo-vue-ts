@@ -1,7 +1,12 @@
+// import models from '/model/tesla_cybertruck/scene.gltf?url'
 import models from '/model/tesla_model_s_plaid_2021/scene.gltf?url'
 import modelPlane from '/model/stylized_ww1_plane/scene.gltf?url'
 import * as Cesium from 'cesium'
 import {Cartesian3} from "cesium";
+import {CesiumUtils} from "@/core/cesiumUtils";
+
+const viewer = window.viewer
+const cesiumUtils = new CesiumUtils({viewer})
 
 let baseTime = new Date('2018-07-19T15:18:00Z')
 let endTime = ''
@@ -50,6 +55,7 @@ let czmlPlane = [
     },
     {
         id: "plane1",
+
         model: {
             gltf: modelPlane,
             scale: 10,
