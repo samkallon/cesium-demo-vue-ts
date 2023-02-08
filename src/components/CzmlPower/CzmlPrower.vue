@@ -20,6 +20,7 @@ const init = () => {
   carEntity = viewer.dataSources.add(Cesium.CzmlDataSource.load(czml)).then(function(dataSource) {
     let entity = dataSource.entities.getById("car1");
     if (entity) {
+      viewer.flyTo(entity)
       viewer.trackedEntity = entity
       positionProperty = entity.position;
       entity.orientation = new Cesium.VelocityOrientationProperty(entity.position);

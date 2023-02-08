@@ -46,6 +46,7 @@ let entity:any
 // )
 
 onMounted(() => {
+  Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3YzBkMDU4Zi00NjVhLTQ2YzgtODgxMS00ZDAzNzVmYjQyYTgiLCJpZCI6NDEzMTIsImlhdCI6MTYwOTk4ODQ2OX0.qtLMhWmf2R-psUzK2Piqh-qXtibvXhcX-vR1tjWGF6E'
   const viewer = new Viewer(containerRef.value as HTMLElement, {
     animation: true, // 动画组件
     timeline: true, // 时间轴组件
@@ -91,20 +92,6 @@ onMounted(() => {
     });
     viewer.scene.camera.setView({
       destination: new Cesium.Cartesian3(
-          3826465.9884728403,
-          -254831.02751468265,
-          5081387.671561018
-      ),
-      orientation: new Cesium.HeadingPitchRoll(
-          3.3889450556243754,
-          -0.5276382514771969,
-          6.282272566663295
-      ),
-      endTransform: Cesium.Matrix4.IDENTITY,
-    });
-
-    viewer.scene.camera.flyTo({
-      destination: new Cesium.Cartesian3(
           3827270.552916987,
           -255123.18143177085,
           5079147.091351856
@@ -113,8 +100,7 @@ onMounted(() => {
           3.2624281242239963,
           -0.22213535190506972,
           6.282786783842843
-      ),
-      duration: 5.0,
+      )
     });
   }
 
