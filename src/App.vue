@@ -22,6 +22,7 @@ import groundTransparent from "@/components/GroundTransparent.vue";
 import currentCamera from '@/components/currentCamera.vue'
 import AddModel from "@/components/AddModel/AddModel.vue";
 import CzmlPower from '@/components/CzmlPower/CzmlPrower.vue'
+import { message } from 'ant-design-vue'
 
 
 const containerRef = ref<HTMLDivElement>()
@@ -107,6 +108,32 @@ onMounted(() => {
   const rawViewer = markRaw(viewer)
   sysStore.setCesiumViewer(rawViewer)
   viewerLoaded = true
+
+  const handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas)
+  window.pickPointArray = []
+  window.pickEntityList = []
+  handler.setInputAction((event:any)=>{
+    // 右键拾取点并添加到数组中,window下的全局变量
+    message.info('拾取成功')
+    const earthPosition = viewer.scene.pickPosition(event.position);
+    window.pickPointArray.push(earthPosition)
+    window.pickEntityList.push(
+        viewer.entities.add({
+      position:earthPosition,
+      point:{
+        pixelSize:20,
+        disableDepthTestDistance:Number.POSITIVE_INFINITY,
+      }
+    }))
+  },Cesium.ScreenSpaceEventType.RIGHT_CLICK)
+  handler.setInputAction(()=>{
+    // 中键点击清空,window下的全局变量
+    message.info('清空成功')
+    window.pickPointArray = []
+    window.pickEntityList.forEach(e=>{
+      viewer.entities.remove(e)
+    })
+  },Cesium.ScreenSpaceEventType.MIDDLE_CLICK )
 })
 
 watch(

@@ -7,9 +7,6 @@
 </template>
 
 <script setup lang="ts">
-import modelx from './model/tesla_model_x/scene.gltf'
-import models from './model/tesla_model_s_plaid_2021/scene.gltf'
-import cybertruck from './model/tesla_cybertruck__racing_free_model/scene.gltf'
 import { useSysStore } from '@/store/sys'
 import * as Cesium from 'cesium'
 import {Cartesian3} from "cesium";
@@ -17,35 +14,52 @@ import {CesiumUtils} from "@/core/cesiumUtils";
 const sysStore = useSysStore()
 const viewer = sysStore.$state.cesiumViewer
 const cesiumUtils = new CesiumUtils(viewer)
-const DIC = [
-  {
-    url: modelx,
-    position:Cesium.Cartesian3.fromDegrees(
-        -3.81612084,
-        53.12392085,
-        206.8
-    ),
-    scale:2
-  },
-  {
-    url:models,
-    position:Cesium.Cartesian3.fromDegrees(
-        -3.81516510,
-        53.12418585,
-        206.8
-    ),
-    scale:0.020
-  },
-  {
-    url:cybertruck,
-    position:Cesium.Cartesian3.fromDegrees(
-        -3.81732846,
-        53.12397809,
-        206.8
-    ),
-    scale:2.0
-  }
-]
+let DIC:any
+let tileset:any
+
+const init = async () => {
+  if (!viewer) return
+  DIC = [
+    {
+      name:'model_x',
+      url: await Cesium.IonResource.fromAssetId(1533479),
+      position:Cesium.Cartesian3.fromDegrees(
+          -3.81612084,
+          53.12392085,
+          207
+      ),
+      scale:2
+    },
+    {
+      name:'model_s',
+      url: await Cesium.IonResource.fromAssetId(1533475),
+      position:Cesium.Cartesian3.fromDegrees(
+          -3.81516510,
+          53.12418585,
+          206.8
+      ),
+      scale:0.02
+    },
+    {
+      name:'cybertruck',
+      url: await Cesium.IonResource.fromAssetId(1533492),
+      position:Cesium.Cartesian3.fromDegrees(
+          -3.81732846,
+          53.12397809,
+          206.8
+      ),
+      scale:0.02
+    }
+  ]
+  // 添加3dtile
+  tileset = viewer.scene.primitives.add(
+      new Cesium.Cesium3DTileset({
+        url: Cesium.IonResource.fromAssetId(69380),
+      })
+  );
+  // 设置相机位置
+  viewer.flyTo(tileset)
+}
 
 const createModel = (type: number) => {
   const heading = Cesium.Math.toRadians(135);
@@ -77,7 +91,8 @@ const createModel = (type: number) => {
       model: {
         uri: DIC[type].url,
         minimumPixelSize:30,
-        scale:DIC[type].scale
+        scale:DIC[type].scale,
+        heightReference:Cesium.HeightReference.CLAMP_TO_GROUND,
       },
     });
 
@@ -92,6 +107,8 @@ const clear = () => {
     viewer.entities.removeById('Model_2')
   }
 }
+
+init()
 
 defineExpose({
   clear

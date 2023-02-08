@@ -14,13 +14,22 @@ const viewer = sysStore.$state.cesiumViewer
 
 let positionProperty:any
 let carEntity:any
+let tileset:any
 
 const init = () => {
   if (!viewer) return
+  // 添加3dtile
+  tileset = viewer.scene.primitives.add(
+      new Cesium.Cesium3DTileset({
+        url: Cesium.IonResource.fromAssetId(69380),
+      })
+  );
+  // 设置相机位置
+  viewer.zoomTo(tileset)
   carEntity = viewer.dataSources.add(Cesium.CzmlDataSource.load(czml)).then(function(dataSource) {
     let entity = dataSource.entities.getById("car1");
     if (entity) {
-      viewer.flyTo(entity)
+      viewer.zoomTo(entity)
       viewer.trackedEntity = entity
       positionProperty = entity.position;
       entity.orientation = new Cesium.VelocityOrientationProperty(entity.position);
@@ -28,6 +37,7 @@ const init = () => {
   })
 }
 init()
+
 const start = () => {
   if (!viewer) return
   viewer.clock.shouldAnimate = true;
@@ -38,10 +48,14 @@ const start = () => {
   });
 }
 
+tileset.initialTilesLoaded.addEventListener(start)
+
+
 const clear = () => {
   if (!viewer) return
   if (!carEntity) return
-  viewer.dataSources.remove(carEntity)
+  viewer.trackedEntity = undefined
+  viewer.entities.remove(carEntity)
 }
 
 defineExpose({
@@ -68,6 +82,6 @@ defineExpose({
   border-radius: 5px;
 }
 fc-arrow-btn{
-  --color: rgb(18, 100, 6);
+  --color: rgb(30, 29, 21);
 }
 </style>
