@@ -1,4 +1,4 @@
-import {Cartesian3, Viewer} from "cesium";
+import {Cartesian3, Entity, Viewer} from "cesium";
 import * as Cesium from 'cesium'
 
 export class CesiumUtils {
@@ -52,26 +52,45 @@ export class CesiumUtils {
         const local_translation = offset; // 向模型中心为原点，正北为y，正东为x，地心朝上为z分别平移 310、-140、10米
         const result = new Cesium.Cartesian3(0,0,0);
         Cesium.Matrix4.multiplyByPoint(frompoint_to_world_matrix, local_translation, result); // 转换矩阵左乘局部平移向量，结果存储在 result 中，结果是世界坐标下的平移终点向量
-        const targetpoint_to_world_matrix = Cesium.Transforms.eastNorthUpToFixedFrame(result);
-        const world_translation = new Cesium.Cartesian3(
-            targetpoint_to_world_matrix[12] - frompoint_to_world_matrix[12],
-            targetpoint_to_world_matrix[13] - frompoint_to_world_matrix[13],
-            targetpoint_to_world_matrix[14] - frompoint_to_world_matrix[14],
-        ); // 向量相减，得到世界坐标下的平移向量
-        return Cesium.Matrix4.fromTranslation(world_translation); // 构造平移矩阵并赋值
+        return Cesium.Matrix4.fromTranslation(Cesium.Cartesian3.subtract(result,position,new Cesium.Cartesian3())); // 构造平移矩阵并赋值
     }
 
     /**
      * 旋转xyz三个方向的角度,单位为degree
      * @param rotate
      */
-    getRotateMatrix4(rotate:Cartesian3){
-        const mat3RoateX = Cesium.Matrix3.fromRotationX(rotate.x)
-        // const mat3RoateY = Cesium.Matrix3.fromRotationY(rotate.y)
-        // const mat3RoateZ = Cesium.Matrix3.fromRotationZ(rotate.z)
-        // let mat4 = Cesium.Matrix4.multiply(mat3RoateX,mat3RoateY,new Cesium.Matrix4())
-        // mat4 = Cesium.Matrix4.multiply(mat4,mat3RoateZ,new Cesium.Matrix4())
-        let mat4 = Cesium.Matrix4.fromRotationTranslation(mat3RoateX)
-        return mat4
+    getRotateMatrix4({x,y,z}:any){
+        if (x) return Cesium.Matrix4.fromRotationTranslation(Cesium.Matrix3.fromRotationX(x))
+        if (y) return Cesium.Matrix4.fromRotationTranslation(Cesium.Matrix3.fromRotationX(y))
+        if (z) return Cesium.Matrix4.fromRotationTranslation(Cesium.Matrix3.fromRotationX(z))
     }
+
+    /**
+     * 修改模型缩放
+     * @param entity
+     * @param scale
+     */
+    setScale(entity:any,scale:number) {
+        if (!entity.model?.scale) return
+        entity.model.scale = scale
+    }
+    /**
+     * 设置模型旋转
+     * @param entity
+     * @param x
+     * @param y
+     * @param z
+     */
+    // @ts-ignore
+    setRotate(entity:any,{x,y,z}) {
+        const origin = entity.position.getValue()
+        const heading = Cesium.Math.toRadians(x)
+        const pitch = Cesium.Math.toRadians(y)
+        const roll = Cesium.Math.toRadians(z)
+
+        const hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll)
+        const orientation = Cesium.Transforms.headingPitchRollQuaternion(origin, hpr)
+        entity.orientation = orientation
+    }
+
 }

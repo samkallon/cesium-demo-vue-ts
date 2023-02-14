@@ -4,25 +4,28 @@
     <current-camera v-if="viewerLoaded"></current-camera>
     <div ref="containerRef" id="cesiumContainer"></div>
     <div ref="unvisibleCreditRef" v-show="false"></div>
-    <digTerrian ref="DigTerrianRef"  v-if="activeMenuKey === 'DigTerrian'" />
+    <digTerrian ref="DigTerrianRef" v-if="activeMenuKey === 'DigTerrian'"/>
     <groundTransparent ref="GroundTransparentRef" v-if="activeMenuKey === 'GroundTransparent'"/>
     <addModel ref="AddModelRef" v-if="activeMenuKey === 'AddModel'"/>
     <czmlPower ref="CzmlPowerRef" v-if="activeMenuKey === 'CzmlPower'"></czmlPower>
+    <ModelMatrix ref="ModelMatrixRef" v-if="activeMenuKey === 'ModelMatrix'"></ModelMatrix>
   </div>
 </template>
 
 <script lang="ts" setup>
 import {ref, onMounted, markRaw, watch, watchEffect} from 'vue'
-import { ArcGisMapServerImageryProvider, Camera, Viewer, Rectangle } from 'cesium'
+import {ArcGisMapServerImageryProvider, Camera, Viewer, Rectangle} from 'cesium'
 import * as Cesium from 'cesium'
-import { useSysStore } from '@/store/sys'
+import {useSysStore} from '@/store/sys'
+import {message} from 'ant-design-vue'
+
 import MenuBar from '@/components/MenuBar.vue'
 import digTerrian from "@/components/DigTerrian.vue";
 import groundTransparent from "@/components/GroundTransparent.vue";
 import currentCamera from '@/components/currentCamera.vue'
 import AddModel from "@/components/AddModel/AddModel.vue";
 import CzmlPower from '@/components/CzmlPower/CzmlPrower.vue'
-import { message } from 'ant-design-vue'
+import ModelMatrix from '@/components/ModelMatrix/ModelMatrix.vue'
 
 
 const containerRef = ref<HTMLDivElement>()
@@ -35,10 +38,10 @@ const GroundTransparentRef = ref(null)
 const AddModelRef = ref(null)
 const CzmlPowerRef = ref(null)
 const refsObj = {
-  DigTerrianRef,GroundTransparentRef,AddModelRef,CzmlPowerRef
+  DigTerrianRef, GroundTransparentRef, AddModelRef, CzmlPowerRef
 }
 let viewerLoaded = false
-let entity:any
+let entity: any
 // Camera.DEFAULT_VIEW_RECTANGLE = Rectangle.fromDegrees(
 //   75.0, // 东
 //   0.0, // 南
@@ -83,34 +86,34 @@ onMounted(() => {
   const handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas)
   window.pickPointArray = []
   window.pickEntityList = []
-  handler.setInputAction((event:any)=>{
-    // 右键拾取点并添加到数组中,window下的全局变量
+  handler.setInputAction((event: any) => {
+    // 按下了ctrl健 右键拾取点并添加到数组中,window下的全局变量
     message.info('拾取成功')
     const earthPosition = viewer.scene.pickPosition(event.position);
     window.pickPointArray.push(earthPosition)
     window.pickEntityList.push(
         viewer.entities.add({
-      position:earthPosition,
-      point:{
-        pixelSize:20,
-        disableDepthTestDistance:Number.POSITIVE_INFINITY,
-      }
-    }))
-  },Cesium.ScreenSpaceEventType.RIGHT_CLICK)
-  handler.setInputAction(()=>{
-    // 中键点击清空,window下的全局变量
+          position: earthPosition,
+          point: {
+            pixelSize: 20,
+            disableDepthTestDistance: Number.POSITIVE_INFINITY,
+          }
+        }))
+  }, Cesium.ScreenSpaceEventType.RIGHT_CLICK,Cesium.KeyboardEventModifier.CTRL)
+  handler.setInputAction(() => {
+    // ctrl + 中键点击清空,window下的全局变量
     message.info('清空成功')
     window.pickPointArray = []
-    window.pickEntityList.forEach(e=>{
+    window.pickEntityList.forEach(e => {
       viewer.entities.remove(e)
     })
-  },Cesium.ScreenSpaceEventType.MIDDLE_CLICK )
+  }, Cesium.ScreenSpaceEventType.MIDDLE_CLICK,Cesium.KeyboardEventModifier.CTRL)
 })
 
 watch(
     () => sysStore.$state.currentComponentKey,
-    (newCurrentComponentKey,oldCurrentComponentKey) => {
-      if (oldCurrentComponentKey){
+    (newCurrentComponentKey, oldCurrentComponentKey) => {
+      if (oldCurrentComponentKey) {
         refsObj[oldCurrentComponentKey + 'Ref'].value.clear()
       }
       activeMenuKey.value = newCurrentComponentKey
@@ -122,19 +125,22 @@ sysStore.setCurrentComponentKey('DigTerrian')
 </script>
 
 <style>
-.common-layout{
+.common-layout {
   width: 100%;
   height: 100%;
   display: flex;
 }
+
 #cesiumContainer {
   width: 100%;
   height: 100%;
 }
-.cesium-viewer-animationContainer{
-  bottom: 40px!important;
+
+.cesium-viewer-animationContainer {
+  bottom: 40px !important;
 }
-.cesium-viewer-timelineContainer{
-  bottom: 40px!important;
+
+.cesium-viewer-timelineContainer {
+  bottom: 40px !important;
 }
 </style>

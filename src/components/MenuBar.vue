@@ -27,6 +27,9 @@
       <a-menu-item key="CzmlPower">
         czml驱动
       </a-menu-item>
+      <a-menu-item key="ModelMatrix">
+        模型调整
+      </a-menu-item>
 
 <!--      <a-menu-item key="fly">-->
 <!--        飞行漫游-->
