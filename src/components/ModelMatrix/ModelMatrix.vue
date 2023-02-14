@@ -83,7 +83,6 @@ import {ref, watch} from 'vue'
 import {useSysStore} from '@/store/sys'
 import {message} from "ant-design-vue";
 import * as Cesium from 'cesium'
-import {CesiumUtils} from "@/core/cesiumUtils";
 
 
 let moveX = ref<any>(0);
@@ -97,16 +96,13 @@ let resizeY = ref<any>(1);
 let resizeZ = ref<any>(1);
 let sysStore = useSysStore()
 const viewer = sysStore.$state.cesiumViewer
-const cesiumUtils = new CesiumUtils({
-  viewer
-})
 let sourceModelMatrix:any
 let Entity: any
-let watchObj:any
 
 const clear = () => {
   if (!viewer) return
   if (!Entity) return
+  viewer.scene.primitives.remove(Entity)
 }
 const init = () => {
   clear()
