@@ -18,18 +18,21 @@
       <a-menu-item key="DigTerrian">
         地形开挖
       </a-menu-item>
-<!--      <a-menu-item key="AddModel">-->
-<!--        模型加载-->
-<!--      </a-menu-item>-->
       <a-menu-item key="GroundTransparent">
         地表透明
       </a-menu-item>
       <a-menu-item key="CzmlPower">
         czml驱动
       </a-menu-item>
-      <a-menu-item key="ModelMatrix">
-        模型调整
-      </a-menu-item>
+      <a-sub-menu key="model">
+        <template #title>模型调整</template>
+        <a-menu-item key="ModelMatrix">
+          数值调整
+        </a-menu-item>
+        <a-menu-item key="ModelAdjust">
+          拖动调整
+        </a-menu-item>
+      </a-sub-menu>
 
 <!--      <a-menu-item key="fly">-->
 <!--        飞行漫游-->

@@ -9,6 +9,7 @@
     <addModel ref="AddModelRef" v-if="activeMenuKey === 'AddModel'"/>
     <czmlPower ref="CzmlPowerRef" v-if="activeMenuKey === 'CzmlPower'"></czmlPower>
     <ModelMatrix ref="ModelMatrixRef" v-if="activeMenuKey === 'ModelMatrix'"></ModelMatrix>
+    <ModelAdjust ref="ModelAdjustRef" v-if="activeMenuKey === 'ModelAdjust'"></ModelAdjust>
   </div>
 </template>
 
@@ -26,6 +27,7 @@ import currentCamera from '@/components/currentCamera.vue'
 import AddModel from "@/components/AddModel/AddModel.vue";
 import CzmlPower from '@/components/CzmlPower/CzmlPrower.vue'
 import ModelMatrix from '@/components/ModelMatrix/ModelMatrix.vue'
+import ModelAdjust from '@/components/ModelAdjust/ModelAdjust.vue'
 
 
 const containerRef = ref<HTMLDivElement>()
@@ -37,17 +39,20 @@ const DigTerrianRef = ref(null)
 const GroundTransparentRef = ref(null)
 const AddModelRef = ref(null)
 const CzmlPowerRef = ref(null)
+const ModelAdjustRef = ref(null)
+const ModelMatrixRef = ref(null)
 const refsObj = {
-  DigTerrianRef, GroundTransparentRef, AddModelRef, CzmlPowerRef
+  DigTerrianRef, GroundTransparentRef, AddModelRef, CzmlPowerRef, ModelAdjustRef, ModelMatrixRef
 }
 let viewerLoaded = false
 let entity: any
-// Camera.DEFAULT_VIEW_RECTANGLE = Rectangle.fromDegrees(
-//   75.0, // 东
-//   0.0, // 南
-//   140.0, // 西
-//   60.0 // 北
-// )
+
+Camera.DEFAULT_VIEW_RECTANGLE = Rectangle.fromDegrees(
+  75.0, // 东
+  0.0, // 南
+  140.0, // 西
+  60.0 // 北
+)
 
 onMounted(() => {
   Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3YzBkMDU4Zi00NjVhLTQ2YzgtODgxMS00ZDAzNzVmYjQyYTgiLCJpZCI6NDEzMTIsImlhdCI6MTYwOTk4ODQ2OX0.qtLMhWmf2R-psUzK2Piqh-qXtibvXhcX-vR1tjWGF6E'
@@ -55,7 +60,7 @@ onMounted(() => {
     animation: true, // 动画组件
     timeline: true, // 时间轴组件
     geocoder: true, //右上角地理空间搜索
-    homeButton: false, // 主页按钮
+    homeButton: true, // 主页按钮
     scene3DOnly: true, // 仅3d模式
     baseLayerPicker: true, // 底图选择器 右上角
     navigationHelpButton: false, // 右上角用户帮助
