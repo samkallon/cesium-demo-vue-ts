@@ -2,14 +2,14 @@ import Cesium from 'cesium'
 // @ts-ignore
 import * as turf from 'turf'
 import * as booleanClockwise from '@turf/boolean-clockwise'
-import { message } from 'ant-design-vue'
+import {message} from 'ant-design-vue'
 
 function TerrainClipPlan(t: any, i: any) {
     // @ts-ignore
-    this.viewer = t,this.options = i || {},this._positions = i.positions,this._height = this.options.height || 0,
-    // @ts-ignore
-    this.bottomImg = i.bottomImg,this.wallImg = i.wallImg,this.splitNum = Cesium.defaultValue(i.splitNum, 50),
-    // @ts-ignore
+    this.viewer = t, this.options = i || {}, this._positions = i.positions, this._height = this.options.height || 0,
+        // @ts-ignore
+        this.bottomImg = i.bottomImg, this.wallImg = i.wallImg, this.splitNum = Cesium.defaultValue(i.splitNum, 50),
+        // @ts-ignore
     this._positions && this._positions.length > 0 && this.updateData(this._positions)
 }
 
@@ -37,7 +37,7 @@ Object.defineProperties(TerrainClipPlan.prototype, {
 TerrainClipPlan.prototype.updateData = function (pointList: any) {
     this.clear();
     // 对点做处理,如果不是逆时针 变为逆时针
-    if(this.ifAntiClockwise(pointList)){
+    if (this.ifAntiClockwise(pointList)) {
         pointList.reverse()
     }
     var t = [],
@@ -47,8 +47,8 @@ TerrainClipPlan.prototype.updateData = function (pointList: any) {
     if (n.x > 0) this.excavateMinHeight = 9999;
     for (let i = 0; i < pointLength; ++i) {
         var nextPointIndex = (i + 1) % pointLength,
-        u = Cesium.Cartographic.fromCartesian(pointList[i]),
-        c = this.viewer.scene.globe.getHeight(u) || u.height;
+            u = Cesium.Cartographic.fromCartesian(pointList[i]),
+            c = this.viewer.scene.globe.getHeight(u) || u.height;
         c < this.excavateMinHeight && (this.excavateMinHeight = c);
 
         var midpoint = Cesium.Cartesian3.add(pointList[i], pointList[nextPointIndex], new Cesium.Cartesian3());
@@ -72,7 +72,7 @@ TerrainClipPlan.prototype.updateData = function (pointList: any) {
         edgeColor: Cesium.Color.WHITE,
         enabled: true
     })
-    if (window.tileset69380){
+    if (window.tileset69380) {
         const clipTileset = new Cesium.ClippingPlaneCollection({
             planes: t,
             edgeWidth: 1,
@@ -89,21 +89,21 @@ TerrainClipPlan.prototype.updateData = function (pointList: any) {
 
 TerrainClipPlan.prototype.clear = function () {
 
-    if(this.viewer.scene.globe.clippingPlanes){
+    if (this.viewer.scene.globe.clippingPlanes) {
         this.viewer.scene.globe.clippingPlanes.enabled = false
-        if (!this.viewer.scene.globe.clippingPlanes.isDestroyed()){
+        if (!this.viewer.scene.globe.clippingPlanes.isDestroyed()) {
             this.viewer.scene.globe.clippingPlanes.removeAll()
             // this.viewer.scene.globe.clippingPlanes.destroy()
         }
     }
-    if (window?.tileset69380?.clippingPlanes?.removeAll){
+    if (window?.tileset69380?.clippingPlanes?.removeAll) {
         window.tileset69380.clippingPlanes.removeAll()
     }
-    if(this.bottomSurface){
+    if (this.bottomSurface) {
         this.viewer.scene.primitives.remove(this.bottomSurface)
         delete this.bottomSurface
     }
-    if (this.wellWall){
+    if (this.wellWall) {
         this.viewer.scene.primitives.remove(this.wellWall)
         delete this.wellWall
     }
@@ -111,34 +111,35 @@ TerrainClipPlan.prototype.clear = function () {
 }
 
 TerrainClipPlan.prototype._prepareWell = function (e: any) {
-    var t = this.splitNum,
-        i = e.length;
-    if (0 != i) {
-        for (var a = this.excavateMinHeight - this.height, n = [], r = [], s = [], l = 0; l < i; l++) {
-            var u = l == i - 1 ? 0 : l + 1,
-                c = Cesium.Cartographic.fromCartesian(e[l]),
-                d = Cesium.Cartographic.fromCartesian(e[u]),
-                h = [c.longitude, c.latitude],
-                f = [d.longitude, d.latitude];
+    // 一个边分割为多少个点
+    var splitNum = this.splitNum,
+        pointListLength = e.length;
+    if (0 != pointListLength) {
+        for (var a = this.excavateMinHeight - this.height, no_height_top = [], bottom_pos = [], lerp_pos = [], currentIndex = 0; currentIndex < pointListLength; currentIndex++) {
+            var nextIndex = currentIndex == pointListLength - 1 ? 0 : currentIndex + 1,
+                currentPoint = Cesium.Cartographic.fromCartesian(e[currentIndex]),
+                nextPoint = Cesium.Cartographic.fromCartesian(e[nextIndex]),
+                currentPointLatlng = [currentPoint.longitude, currentPoint.latitude],
+                nextPointLatlng = [nextPoint.longitude, nextPoint.latitude];
 
-            0 == l && (
-                s.push(new Cesium.Cartographic(h[0], h[1])),
-                    r.push(Cesium.Cartesian3.fromRadians(h[0], h[1], a)),
-                    n.push(Cesium.Cartesian3.fromRadians(h[0], h[1], 0)));
-
-            for (var p = 1; p <= t; p++) {
-                var m = Cesium.Math.lerp(h[0], f[0], p / t),
-                    g = Cesium.Math.lerp(h[1], f[1], p / t);
-                l == i - 1 && p == t || (
-                    s.push(new Cesium.Cartographic(m, g)),
-                        r.push(Cesium.Cartesian3.fromRadians(m, g, a)),
-                        n.push(Cesium.Cartesian3.fromRadians(m, g, 0)))
+            if(0 == currentIndex){
+                lerp_pos.push(new Cesium.Cartographic(currentPointLatlng[0], currentPointLatlng[1]))
+                bottom_pos.push(Cesium.Cartesian3.fromRadians(currentPointLatlng[0], currentPointLatlng[1], a))
+                no_height_top.push(Cesium.Cartesian3.fromRadians(currentPointLatlng[0], currentPointLatlng[1], 0));
+            }
+            for (var p = 1; p <= splitNum; p++) {
+                const lerpPointX = Cesium.Math.lerp(currentPointLatlng[0], nextPointLatlng[0], p / splitNum)
+                const lerpPointY = Cesium.Math.lerp(currentPointLatlng[1], nextPointLatlng[1], p / splitNum);
+                currentIndex == pointListLength - 1 && p == splitNum || (
+                    lerp_pos.push(new Cesium.Cartographic(lerpPointX, lerpPointY)),
+                    bottom_pos.push(Cesium.Cartesian3.fromRadians(lerpPointX, lerpPointY, a)),
+                    no_height_top.push(Cesium.Cartesian3.fromRadians(lerpPointX, lerpPointY, 0)))
             }
         }
         this.wellData = {
-            lerp_pos: s,
-            bottom_pos: r,
-            no_height_top: n
+            lerp_pos,
+            bottom_pos,
+            no_height_top
         }
     }
 }
@@ -148,7 +149,7 @@ TerrainClipPlan.prototype._createWell = function (e: any) {
         var t = this;
         this._createBottomSurface(e.bottom_pos);
         var i = Cesium.sampleTerrainMostDetailed(this.viewer.terrainProvider, e.lerp_pos);
-        i.then(ies=>{
+        i.then(ies => {
             for (var a = ies.length, n = [], r = 0; r < a; r++) {
                 var s = Cesium.Cartesian3.fromRadians(ies[r].longitude, ies[r].latitude, ies[r].height);
                 n.push(s)
@@ -287,13 +288,13 @@ TerrainClipPlan.prototype.ifAntiClockwise = function (e: any) {
     //找凸点
     let pointList = JSON.parse(JSON.stringify(e))
     pointList.push(pointList[0])
-    let pointListGeo = turf.lineString(pointList.map((point:any,index:number)=>{
+    let pointListGeo = turf.lineString(pointList.map((point: any, index: number) => {
         return this.getLatLngFromXZY(point)
     }))
     let dirRes = booleanClockwise.default(pointListGeo)
-    if (dirRes){
+    if (dirRes) {
         message.info('当前绘制图形为顺时针!')
-    }else{
+    } else {
         message.info('当前绘制图形为逆时针!')
     }
     return dirRes
@@ -302,12 +303,12 @@ TerrainClipPlan.prototype.ifAntiClockwise = function (e: any) {
 // 世界坐标转经纬度
 TerrainClipPlan.prototype.getLatLngFromXZY = function (e: any) {
     var ellipsoid = this.viewer.scene.globe.ellipsoid;
-    var cartesian3 = new Cesium.Cartesian3(e.x,e.y,e.z);
+    var cartesian3 = new Cesium.Cartesian3(e.x, e.y, e.z);
     var cartographic = ellipsoid.cartesianToCartographic(cartesian3);
     var latitude = Cesium.Math.toDegrees(cartographic.latitude);
     var longitude = Cesium.Math.toDegrees(cartographic.longitude);
     var height = cartographic.height;
-    return [longitude,latitude]
+    return [longitude, latitude]
 }
 
 
