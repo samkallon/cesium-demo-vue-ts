@@ -10,6 +10,7 @@
     <czmlPower ref="CzmlPowerRef" v-if="activeMenuKey === 'CzmlPower'"></czmlPower>
     <ModelMatrix ref="ModelMatrixRef" v-if="activeMenuKey === 'ModelMatrix'"></ModelMatrix>
     <ModelAdjust ref="ModelAdjustRef" v-if="activeMenuKey === 'ModelAdjust'"></ModelAdjust>
+    <LinePlaneIntersect ref="LinePlaneIntersectRef" v-if="activeMenuKey === 'LinePlaneIntersect'"></LinePlaneIntersect>
   </div>
 </template>
 
@@ -28,6 +29,7 @@ import AddModel from "@/components/AddModel/AddModel.vue";
 import CzmlPower from '@/components/CzmlPower/CzmlPrower.vue'
 import ModelMatrix from '@/components/ModelMatrix/ModelMatrix.vue'
 import ModelAdjust from '@/components/ModelAdjust/ModelAdjust.vue'
+import LinePlaneIntersect from '@/components/LinePlaneIntersect/LinePlaneIntersect.vue'
 
 
 const containerRef = ref<HTMLDivElement>()
@@ -41,8 +43,10 @@ const AddModelRef = ref(null)
 const CzmlPowerRef = ref(null)
 const ModelAdjustRef = ref(null)
 const ModelMatrixRef = ref(null)
+const LinePlaneIntersectRef = ref(null)
 const refsObj = {
-  DigTerrianRef, GroundTransparentRef, AddModelRef, CzmlPowerRef, ModelAdjustRef, ModelMatrixRef
+  DigTerrianRef, GroundTransparentRef, AddModelRef, CzmlPowerRef, ModelAdjustRef, ModelMatrixRef,
+  LinePlaneIntersectRef
 }
 let viewerLoaded = false
 let entity: any
@@ -86,7 +90,7 @@ onMounted(() => {
   const rawViewer = markRaw(viewer)
   sysStore.setCesiumViewer(rawViewer)
   viewerLoaded = true
-  window.viewer = rawViewer
+  window.viewer = viewer
 
   const handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas)
   window.pickPointArray = []

@@ -129,19 +129,33 @@ const init = () => {
     // 选取模型
     const pickObj = viewer.scene.pick(event.position)
     if (!pickObj) return
-    MoveEntity = pickObj.id
-  },Cesium.ScreenSpaceEventType.LEFT_DOWN,Cesium.KeyboardEventModifier.CTRL)
+    MoveEntity = pickObj.primitive
+  },Cesium.ScreenSpaceEventType.LEFT_CLICK)
 
   handler.setInputAction((event:any)=>{
     if (MoveEntity){
-      const position = viewer.scene.pickPosition(event.position)
-      MoveEntity.modelMatrix = Cesium.Matrix4.multiply(MoveEntity.modelMatrix,Cesium.Transforms.eastNorthUpToFixedFrame(position),MoveEntity.modelMatrix)
+      viewer.scene.screenSpaceCameraController.enableRotate = false
+      const startPosition = viewer.scene.globe.pick(viewer.camera.getPickRay(event.startPosition),viewer.scene)
+      // const startPosition = Cesium.Matrix4.getTranslation(MoveEntity.modelMatrix,new Cartesian3())
+      const endPosition = viewer.scene.globe.pick(viewer.camera.getPickRay(event.endPosition),viewer.scene)
+      // const startRay = viewer.camera.getPickRay(event.startPosition)
+      // const startPosition = viewer.scene.globe.pick(startRay, viewer.scene)
+      //
+      // const endRay = viewer.camera.getPickRay(event.endPosition)
+      // const endPosition = viewer.scene.globe.pick(endRay, viewer.scene)
+      console.log('startPosition :%o',startPosition)
+      console.log('endPosition :%o',endPosition)
+      const moveCartesian = Cesium.Cartesian3.subtract(startPosition,endPosition,new Cartesian3())
+      MoveEntity.modelMatrix = Cesium.Matrix4.multiply(MoveEntity.modelMatrix,
+          Cesium.Matrix4.fromTranslation(moveCartesian)
+          ,MoveEntity.modelMatrix)
     }
-  },Cesium.ScreenSpaceEventType.MOUSE_MOVE,Cesium.KeyboardEventModifier.CTRL)
+  },Cesium.ScreenSpaceEventType.MOUSE_MOVE)
 
   handler.setInputAction((event:any)=>{
-
-  },Cesium.ScreenSpaceEventType.LEFT_UP,Cesium.KeyboardEventModifier.CTRL)
+    MoveEntity = null
+    viewer.scene.screenSpaceCameraController.enableRotate = true
+  },Cesium.ScreenSpaceEventType.RIGHT_CLICK)
 }
 init()
 
