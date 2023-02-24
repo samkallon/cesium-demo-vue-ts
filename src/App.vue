@@ -99,7 +99,7 @@ onMounted(() => {
     // 按下了ctrl健 右键拾取点并添加到数组中,window下的全局变量
     message.info('拾取成功')
     const earthPosition = viewer.scene.pickPosition(event.position);
-    window.pickPointArray.push(earthPosition)
+    window.pickPointArray.push(Cesium.Cartographic.fromCartesian(earthPosition))
     window.pickEntityList.push(
         viewer.entities.add({
           position: earthPosition,
