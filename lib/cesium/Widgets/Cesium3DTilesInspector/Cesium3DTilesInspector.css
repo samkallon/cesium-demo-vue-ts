@@ -1,4 +1,4 @@
-/* packages/widgets/Source/Cesium3DTilesInspector/Cesium3DTilesInspector.css */
+/* Source/Widgets/Cesium3DTilesInspector/Cesium3DTilesInspector.css */
 ul.cesium-cesiumInspector-statistics {
   margin: 0;
   padding-top: 3px;
@@ -57,11 +57,6 @@ ul.cesium-cesiumInspector-statistics + ul.cesium-cesiumInspector-statistics {
 }
 .cesium-3DTilesInspector-statistics {
   font-size: 11px;
-}
-.cesium-3DTilesInspector-disabledElementsInfo {
-  margin: 5px 0 0 0;
-  padding: 0 0 0 20px;
-  color: #eed202;
 }
 .cesium-3DTilesInspector div,
 .cesium-3DTilesInspector input[type=range] {
