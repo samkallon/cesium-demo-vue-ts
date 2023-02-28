@@ -36,6 +36,9 @@
       <a-menu-item key="LinePlaneIntersect">
         线面碰撞测试
       </a-menu-item>
+      <a-menu-item key="ShaderToy">
+        ShaderToy
+      </a-menu-item>
 
 <!--      <a-menu-item key="fly">-->
 <!--        飞行漫游-->
