@@ -36,9 +36,16 @@
       <a-menu-item key="LinePlaneIntersect">
         线面碰撞测试
       </a-menu-item>
-      <a-menu-item key="ShaderToy">
-        ShaderToy
-      </a-menu-item>
+      <a-sub-menu key="ShaderToy">
+        <template #title>ShaderToy</template>
+        <a-menu-item key="ShaderToyWater">
+          ShaderToyWater
+        </a-menu-item>
+        <a-menu-item key="ShaderToyBox">
+          ShaderToyBox
+        </a-menu-item>
+      </a-sub-menu>
+
 
 <!--      <a-menu-item key="fly">-->
 <!--        飞行漫游-->

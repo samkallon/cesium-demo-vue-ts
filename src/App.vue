@@ -11,7 +11,8 @@
     <ModelMatrix ref="ModelMatrixRef" v-if="activeMenuKey === 'ModelMatrix'"></ModelMatrix>
     <ModelAdjust ref="ModelAdjustRef" v-if="activeMenuKey === 'ModelAdjust'"></ModelAdjust>
     <LinePlaneIntersect ref="LinePlaneIntersectRef" v-if="activeMenuKey === 'LinePlaneIntersect'"></LinePlaneIntersect>
-    <ShaderToy ref="ShaderToyRef" v-if="activeMenuKey === 'ShaderToy'"></ShaderToy>
+    <ShaderToyWater ref="ShaderToyWaterRef" v-if="activeMenuKey === 'ShaderToyWater'"></ShaderToyWater>
+    <ShaderToyBox ref="ShaderToyBoxRef" v-if="activeMenuKey === 'ShaderToyBox'"></ShaderToyBox>
   </div>
 </template>
 
@@ -31,7 +32,8 @@ import CzmlPower from '@/components/CzmlPower/CzmlPrower.vue'
 import ModelMatrix from '@/components/ModelMatrix/ModelMatrix.vue'
 import ModelAdjust from '@/components/ModelAdjust/ModelAdjust.vue'
 import LinePlaneIntersect from '@/components/LinePlaneIntersect/LinePlaneIntersect.vue'
-import ShaderToy from "@/components/ShaderToy/ShaderToy.vue";
+import ShaderToyWater from "@/components/ShaderToy/ShaderToyWater.vue";
+import ShaderToyBox from "@/components/ShaderToy/ShaderToyBox.vue";
 
 
 const containerRef = ref<HTMLDivElement>()
@@ -46,10 +48,11 @@ const CzmlPowerRef = ref(null)
 const ModelAdjustRef = ref(null)
 const ModelMatrixRef = ref(null)
 const LinePlaneIntersectRef = ref(null)
-const ShaderToyRef = ref(null)
+const ShaderToyWaterRef = ref(null)
+const ShaderToyBoxRef = ref(null)
 const refsObj = {
   DigTerrianRef, GroundTransparentRef, AddModelRef, CzmlPowerRef, ModelAdjustRef, ModelMatrixRef,
-  LinePlaneIntersectRef,ShaderToyRef
+  LinePlaneIntersectRef,ShaderToyWater,ShaderToyBox
 }
 let viewerLoaded = false
 let entity: any

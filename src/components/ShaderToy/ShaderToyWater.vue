@@ -2315,6 +2315,7 @@ const init = () => {
       fabric: {
         uniforms: {
           iTime: 0,
+          iResolution:{x:10,y:10}
         },
         source:`
         const int NUM_STEPS = 8;
@@ -2453,7 +2454,7 @@ const init = () => {
       }
            vec4 czm_getMaterial(vec2 vUv)
            {
-            vec2 uv = vUv;
+            vec2 uv = vUv / iResolution.xy;
             uv = vUv * 2.0 - 1.0;
             float time = iTime * 0.3 + 0.0*0.01;
             // ray
