@@ -2291,14 +2291,14 @@ const init = () => {
     polygonHierarchy:new Cesium.PolygonHierarchy(
         Cesium.Cartesian3.fromDegreesArrayHeights(PolygonHierarchyJinJi)
     ),
-    height:110
+    height:50
   });
   const polygonTaiHu = new Cesium.PolygonGeometry({
     vertexFormat : Cesium.VertexFormat.POSITION_NORMAL_AND_ST,
     polygonHierarchy:new Cesium.PolygonHierarchy(
         Cesium.Cartesian3.fromDegreesArrayHeights(PolygonHierarchyTaiHu)
     ),
-    height:110
+    height:150
   });
   const geometryJinJi = Cesium.PolygonGeometry.createGeometry(polygonJinJi);
   const geometryTaiHu = Cesium.PolygonGeometry.createGeometry(polygonTaiHu);
