@@ -79,13 +79,8 @@ onMounted(() => {
     }),
     msaaSamples: 2,
     selectionIndicator: false,
-    contextOptions: {
-      requestWebGl1: true
-    },
     terrainProvider: Cesium.createWorldTerrain(),
-    resolutionScale: 0.85,//默认值为1.0 调整画面精细度 越低 帧率越高
-    requestRenderMode: false, // 画面发生变化时 才渲染页面, 适合禁止页面内没有动画的情况
-    maximumRenderTimeChange: Infinity, // 最大渲染时间间隔
+    resolutionScale: 1.0,//默认值为1.0 调整画面精细度 越低 帧率越高
   })
   viewer.scene.globe.depthTestAgainstTerrain = true;
   viewer.scene.debugShowFramesPerSecond = true;
