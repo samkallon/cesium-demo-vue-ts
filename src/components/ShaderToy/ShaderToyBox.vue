@@ -77,15 +77,14 @@ const init = () => {
                   break;
                 }
                 //col+=vec3(0.6,0.8,0.8)/(400.*(d));
-                col+=palette(length(p)*.1)/(400.*(d));
+                col+=palette(length(p)*.1)/(200.*(d));
                 t+=d;
             }
             return vec4(col,1./(d*100.));
         }
          vec4 czm_getMaterial(vec2 vUv)
          {
-          NSLog(@"vUv = %d",vUv);
-          vec2 uv = vUv
+          vec2 uv = vUv - vec2(0.5,0.5);
           vec3 ro = vec3(0.,0.,-50.);
           ro.xz = rotate(ro.xz,iTime);
           vec3 cf = normalize(-ro);
@@ -103,23 +102,6 @@ const init = () => {
       }
     }),
     translucent: true,
-    vertexShaderSource: `
-        in vec3 position3DHigh;
-        in vec3 position3DLow;
-        in float batchId;
-        in vec2 st;
-        in vec3 normal;
-        out vec2 v_st;
-        out vec3 v_positionEC;
-        out vec3 v_normalEC;
-        void main() {
-            v_st = st;
-            vec4 p = czm_computePosition();
-            v_positionEC = (czm_modelViewRelativeToEye * p).xyz;      // position in eye coordinates
-            v_normalEC = czm_normal * normal;                         // normal in eye coordinates
-            gl_Position = czm_modelViewProjectionRelativeToEye * p;
-        }
-                    `,
     fragmentShaderSource: `
       in vec2 v_st;
       in vec3 v_positionEC;
@@ -130,7 +112,7 @@ const init = () => {
         czm_materialInput materialInput;
         materialInput.normalEC = normalEC;
         materialInput.positionToEyeEC = positionToEyeEC;
-        materialInput.st = v_st;
+        materialInput.st = v_st - vec2(0.3,0.3);
         vec4 color = czm_getMaterial(v_st);
         out_FragColor = color;
       }
@@ -144,8 +126,10 @@ const init = () => {
     geometryInstances: inst,
     appearance: aper,
     modelMatrix: modelMatrix,
+    translucent:false,
     asynchronous : false
   }));
+
 
   viewer.camera.flyToBoundingSphere(new Cesium.BoundingSphere(
       Cesium.Cartesian3.fromDegrees(110, 40, 10), 950000,

@@ -21,7 +21,7 @@
     "@types/node": "^18.7.6",
     "@vitejs/plugin-vue": "^3.0.3",
     "@vue/compiler-sfc": "^3.2.37",
-    "cesium": "1.102.0",
+    "cesium": "^1.103.0",
     "del": "^7.0.0",
     "recursive-copy": "^2.0.14",
     "sass": "^1.57.1",
