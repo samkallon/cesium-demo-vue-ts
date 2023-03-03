@@ -48,7 +48,7 @@ const init = () => {
       id:'tesla_cybertruck',
       url:'/model/tesla_cybertruck/scene.gltf',
       scale:0.05,
-      modelMatrix:matrix
+      modelMatrix:matrix,
     })
   )
   const centerPoint = Cesium.Cartographic.fromCartesian(position)
@@ -115,7 +115,7 @@ const init = () => {
     // appearance:new Cesium.PerInstanceColorAppearance()
   }));
 
-  viewer.camera.flyTo({
+  viewer.camera.setView({
     destination:Cesium.Cartesian3.fromDegrees(120.675895, 31.319111,500),
     orientation:{
       heading:Cesium.Math.toRadians(90),
@@ -145,10 +145,9 @@ const init = () => {
       // const endPosition = viewer.scene.globe.pick(endRay, viewer.scene)
       console.log('startPosition :%o',startPosition)
       console.log('endPosition :%o',endPosition)
-      const moveCartesian = Cesium.Cartesian3.subtract(startPosition,endPosition,new Cartesian3())
-      MoveEntity.modelMatrix = Cesium.Matrix4.multiply(MoveEntity.modelMatrix,
-          Cesium.Matrix4.fromTranslation(moveCartesian)
-          ,MoveEntity.modelMatrix)
+      const rotateXMatrix = Cesium.Matrix4.fromRotation(Cesium.Matrix3.fromRotationX(Cesium.Math.toRadians(-80)))
+      const rotateXMatriy = Cesium.Matrix4.fromRotation(Cesium.Matrix3.fromRotationY(Cesium.Math.toRadians(-60)))
+      Cesium.Matrix4.multiply(Cesium.Matrix4.fromTranslation(endPosition),rotateXMatriy,MoveEntity.modelMatrix)
     }
   },Cesium.ScreenSpaceEventType.MOUSE_MOVE)
 
