@@ -19,6 +19,7 @@ let Entity: any
 
 const clear = () => {
   if (!viewer) return
+  viewer.scene.primitives.removeAll()
 }
 const init = () => {
   if (!viewer) return
@@ -26,13 +27,22 @@ const init = () => {
   message.info('数据加载中!')
   var box = new Cesium.BoxGeometry({
     vertexFormat : Cesium.VertexFormat.POSITION_NORMAL_AND_ST,
-    maximum : new Cesium.Cartesian3(250000.0, 250000.0, 250000.0),
-    minimum : new Cesium.Cartesian3(-250000.0, -250000.0, -250000.0)
+    maximum : new Cesium.Cartesian3(240000.0, 240000.0, 240000.0),
+    minimum : new Cesium.Cartesian3(-240000.0, -240000.0, -240000.0)
+  });
+  var boxMin = new Cesium.BoxGeometry({
+    vertexFormat : Cesium.VertexFormat.POSITION_NORMAL_AND_ST,
+    maximum : new Cesium.Cartesian3(240000.0, 240000.0, 240000.0),
+    minimum : new Cesium.Cartesian3(-240000.0, -240000.0, -240000.0)
   });
   var geometry = Cesium.BoxGeometry.createGeometry(box);
+  var geometryMin = Cesium.BoxGeometry.createGeometry(boxMin);
 
   let inst = new Cesium.GeometryInstance({
     geometry: geometry
+  });
+  let instMin = new Cesium.GeometryInstance({
+    geometry: geometryMin
   });
   // 自定义材质
   let aper = new Cesium.MaterialAppearance({
@@ -54,7 +64,7 @@ const init = () => {
 
         float map(vec3 p){
             for( int i = 0; i<8; ++i){
-                float t = iTime*0.2;
+                float t = iTime*0.1;
                 p.xz =rotate(p.xz,t);
                 p.xy =rotate(p.xy,t*1.89);
                 p.xz = abs(p.xz);
@@ -77,7 +87,7 @@ const init = () => {
                   break;
                 }
                 //col+=vec3(0.6,0.8,0.8)/(400.*(d));
-                col+=palette(length(p)*.1)/(200.*(d));
+                col+=palette(length(p)*.1)/(abs(sin(iTime))*100.*(d));
                 t+=d;
             }
             return vec4(col,1./(d*100.));
@@ -91,7 +101,7 @@ const init = () => {
           vec3 cs = normalize(cross(cf,vec3(0.,1.,0.)));
           vec3 cu = normalize(cross(cf,cs));
 
-          vec3 uuv = ro+cf*3. + uv.x*cs + uv.y*cu;
+          vec3 uuv = ro+cf*5. + uv.x*cs + uv.y*cu;
 
           vec3 rd = normalize(uuv-ro);
 
@@ -112,19 +122,35 @@ const init = () => {
         czm_materialInput materialInput;
         materialInput.normalEC = normalEC;
         materialInput.positionToEyeEC = positionToEyeEC;
-        materialInput.st = v_st - vec2(0.3,0.3);
+        materialInput.st = v_st;
         vec4 color = czm_getMaterial(v_st);
         out_FragColor = color;
       }
                 `,
   });
   let modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(
-      Cesium.Cartesian3.fromDegrees(110, 40, 10)
+      Cesium.Cartesian3.fromDegrees(110, 40, 250000)
   );
 
   viewer.scene.primitives.add(new Cesium.Primitive({
     geometryInstances: inst,
     appearance: aper,
+    modelMatrix: modelMatrix,
+    asynchronous : false
+  }));
+
+  viewer.scene.primitives.add(new Cesium.Primitive({
+    geometryInstances: instMin,
+    appearance: new Cesium.MaterialAppearance({
+      material:new Cesium.Material({
+        fabric:{
+          type:'color',
+          uniforms:{
+            color: new Cesium.Color.fromCssColorString('#494444')
+          }
+        }
+      })
+    }),
     modelMatrix: modelMatrix,
     translucent:false,
     asynchronous : false

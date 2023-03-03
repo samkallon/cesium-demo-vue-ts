@@ -39,10 +39,13 @@
       <a-sub-menu key="ShaderToy">
         <template #title>ShaderToy</template>
         <a-menu-item key="ShaderToyWater">
-          ShaderToyWater
+          水面
         </a-menu-item>
         <a-menu-item key="ShaderToyBox">
-          ShaderToyBox
+          光影盒子
+        </a-menu-item>
+        <a-menu-item key="ShaderToyRadar">
+          雷达
         </a-menu-item>
       </a-sub-menu>
 

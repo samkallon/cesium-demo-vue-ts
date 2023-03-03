@@ -19,6 +19,7 @@ let Entity: any
 
 const clear = () => {
   if (!viewer) return
+  viewer.scene.primitives.removeAll()
 }
 const init = () => {
   if (!viewer) return
@@ -2315,7 +2316,7 @@ const init = () => {
       fabric: {
         uniforms: {
           iTime: 0,
-          iResolution:{x:10,y:10}
+          iResolution:{x:704,y:396}
         },
         source:`
         const int NUM_STEPS = 8;
@@ -2452,50 +2453,34 @@ const init = () => {
         }
         return tmid;
       }
-           vec4 czm_getMaterial(vec2 vUv)
-           {
-            vec2 uv = vUv / iResolution.xy;
-            uv = vUv * 2.0 - 1.0;
-            float time = iTime * 0.3 + 0.0*0.01;
-            // ray
-            vec3 ang = vec3(0, 1.2, 0.0);
-              vec3 ori = vec3(0.0,3.5,0);
-            vec3 dir = normalize(vec3(uv.xy,-2.0)); dir.z += length(uv) * 0.15;
-            dir = normalize(dir) * fromEuler(ang);
-            // tracing
-            vec3 p;
-            heightMapTracing(ori,dir,p);
-            vec3 dist = p - ori;
-            vec3 n = getNormal(p, dot(dist,dist) * EPSILON_NRM);
-            vec3 light = normalize(vec3(0.0,1.0,0.8));
-            // color
-            vec3 color = mix(
-              getSkyColor(dir),
-              getSeaColor(p,n,light,dir,dist),
-              pow(smoothstep(0.0,-0.05,dir.y),0.3));
-               return vec4( pow(color,vec3(0.75)), 1.0 );
-           }
+       vec4 czm_getMaterial(vec2 vUv)
+       {
+        vec2 uv = vUv / 3000.;
+        uv = vUv - 1.0;
+        float time = iTime * 0.3 + 0.0*0.01;
+        uv.x *= iResolution.x / iResolution.y;
+        // ray
+        vec3 ang = vec3(0, 1.2, 0.0);
+        vec3 ori = vec3(0.0,3.5,0);
+        vec3 dir = normalize(vec3(uv.xy,-2.0)); dir.z += length(uv) * 0.01;
+        dir = normalize(dir) * fromEuler(ang);
+        // tracing
+        vec3 p;
+        heightMapTracing(ori,dir,p);
+        vec3 dist = p - ori;
+        vec3 n = getNormal(p, dot(dist,dist) * EPSILON_NRM);
+        vec3 light = normalize(vec3(0.0,1.0,0.8));
+        // color
+        vec3 color = mix(
+          getSkyColor(dir),
+          getSeaColor(p,n,light,dir,dist),
+          pow(smoothstep(0.0,-0.05,dir.y),0.3));
+           return vec4( pow(color,vec3(0.75)), 1.0 );
+       }
         `,
       }
     }),
     translucent: true,
-    // vertexShaderSource: `
-    //     in vec3 position3DHigh;
-    //     in vec3 position3DLow;
-    //     in float batchId;
-    //     in vec2 st;
-    //     in vec3 normal;
-    //     out vec2 v_st;
-    //     out vec3 v_positionEC;
-    //     out vec3 v_normalEC;
-    //     void main() {
-    //         v_st = st;
-    //         vec4 p = czm_computePosition();
-    //         v_positionEC = (czm_modelViewRelativeToEye * p).xyz;      // position in eye coordinates
-    //         v_normalEC = czm_normal * normal;                         // normal in eye coordinates
-    //         gl_Position = czm_modelViewProjectionRelativeToEye * p;
-    //     }
-    //                 `,
     fragmentShaderSource: `
       in vec2 v_st;
       in vec3 v_positionEC;

@@ -13,6 +13,7 @@
     <LinePlaneIntersect ref="LinePlaneIntersectRef" v-if="activeMenuKey === 'LinePlaneIntersect'"></LinePlaneIntersect>
     <ShaderToyWater ref="ShaderToyWaterRef" v-if="activeMenuKey === 'ShaderToyWater'"></ShaderToyWater>
     <ShaderToyBox ref="ShaderToyBoxRef" v-if="activeMenuKey === 'ShaderToyBox'"></ShaderToyBox>
+    <ShaderToyRadar ref="ShaderToyRadarRef" v-if="activeMenuKey === 'ShaderToyRadar'"></ShaderToyRadar>
   </div>
 </template>
 
@@ -34,6 +35,7 @@ import ModelAdjust from '@/components/ModelAdjust/ModelAdjust.vue'
 import LinePlaneIntersect from '@/components/LinePlaneIntersect/LinePlaneIntersect.vue'
 import ShaderToyWater from "@/components/ShaderToy/ShaderToyWater.vue";
 import ShaderToyBox from "@/components/ShaderToy/ShaderToyBox.vue";
+import ShaderToyRadar from '@/components/ShaderToy/ShaderToyRadar.vue'
 
 
 const containerRef = ref<HTMLDivElement>()
@@ -50,9 +52,10 @@ const ModelMatrixRef = ref(null)
 const LinePlaneIntersectRef = ref(null)
 const ShaderToyWaterRef = ref(null)
 const ShaderToyBoxRef = ref(null)
+const ShaderToyRadarRef = ref(null)
 const refsObj = {
   DigTerrianRef, GroundTransparentRef, AddModelRef, CzmlPowerRef, ModelAdjustRef, ModelMatrixRef,
-  LinePlaneIntersectRef,ShaderToyWater,ShaderToyBox
+  LinePlaneIntersectRef,ShaderToyWaterRef,ShaderToyBoxRef,ShaderToyRadarRef
 }
 let viewerLoaded = false
 let entity: any
