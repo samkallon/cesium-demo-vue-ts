@@ -14,6 +14,7 @@
     <ShaderToyWater ref="ShaderToyWaterRef" v-if="activeMenuKey === 'ShaderToyWater'"></ShaderToyWater>
     <ShaderToyBox ref="ShaderToyBoxRef" v-if="activeMenuKey === 'ShaderToyBox'"></ShaderToyBox>
     <ShaderToyRadar ref="ShaderToyRadarRef" v-if="activeMenuKey === 'ShaderToyRadar'"></ShaderToyRadar>
+    <Noise ref="NoiseRef" v-if="activeMenuKey === 'Noise'"></Noise>
   </div>
 </template>
 
@@ -36,6 +37,7 @@ import LinePlaneIntersect from '@/components/LinePlaneIntersect/LinePlaneInterse
 import ShaderToyWater from "@/components/ShaderToy/ShaderToyWater.vue";
 import ShaderToyBox from "@/components/ShaderToy/ShaderToyBox.vue";
 import ShaderToyRadar from '@/components/ShaderToy/ShaderToyRadar.vue'
+import Noise from '@/components/ShaderToy/Noise.vue'
 
 
 const containerRef = ref<HTMLDivElement>()
@@ -53,9 +55,10 @@ const LinePlaneIntersectRef = ref(null)
 const ShaderToyWaterRef = ref(null)
 const ShaderToyBoxRef = ref(null)
 const ShaderToyRadarRef = ref(null)
+const NoiseRef = ref(null)
 const refsObj = {
   DigTerrianRef, GroundTransparentRef, AddModelRef, CzmlPowerRef, ModelAdjustRef, ModelMatrixRef,
-  LinePlaneIntersectRef,ShaderToyWaterRef,ShaderToyBoxRef,ShaderToyRadarRef
+  LinePlaneIntersectRef,ShaderToyWaterRef,ShaderToyBoxRef,ShaderToyRadarRef,NoiseRef
 }
 let viewerLoaded = false
 let entity: any
@@ -86,7 +89,7 @@ onMounted(() => {
     msaaSamples: 2,
     selectionIndicator: false,
     terrainProvider: Cesium.createWorldTerrain(),
-    resolutionScale: 1.0,//默认值为1.0 调整画面精细度 越低 帧率越高
+    resolutionScale: 0.8,//默认值为1.0 调整画面精细度 越低 帧率越高
   })
   viewer.scene.globe.depthTestAgainstTerrain = true;
   viewer.scene.debugShowFramesPerSecond = true;

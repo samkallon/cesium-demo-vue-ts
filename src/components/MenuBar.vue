@@ -37,7 +37,7 @@
         线面碰撞测试
       </a-menu-item>
       <a-sub-menu key="ShaderToy">
-        <template #title>ShaderToy</template>
+        <template #title>材质</template>
         <a-menu-item key="ShaderToyWater">
           水面
         </a-menu-item>
@@ -46,6 +46,9 @@
         </a-menu-item>
         <a-menu-item key="ShaderToyRadar">
           雷达
+        </a-menu-item>
+        <a-menu-item key="Noise">
+          噪声
         </a-menu-item>
       </a-sub-menu>
 
