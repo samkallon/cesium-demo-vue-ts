@@ -51,6 +51,12 @@
           噪声
         </a-menu-item>
       </a-sub-menu>
+      <a-sub-menu key="ParticleSystem">
+        <template #title>粒子系统</template>
+        <a-menu-item key="ParticleWater">
+          喷泉
+        </a-menu-item>
+      </a-sub-menu>
 
 
 <!--      <a-menu-item key="fly">-->

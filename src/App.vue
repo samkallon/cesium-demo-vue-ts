@@ -1,7 +1,7 @@
 <template>
   <div class="common-layout">
     <MenuBar></MenuBar>
-    <current-camera v-if="viewerLoaded"></current-camera>
+    <currentCamera v-if="viewerLoaded"></currentCamera>
     <div ref="containerRef" id="cesiumContainer"></div>
     <div ref="unvisibleCreditRef" v-show="false"></div>
     <digTerrian ref="DigTerrianRef" v-if="activeMenuKey === 'DigTerrian'"/>
@@ -15,6 +15,7 @@
     <ShaderToyBox ref="ShaderToyBoxRef" v-if="activeMenuKey === 'ShaderToyBox'"></ShaderToyBox>
     <ShaderToyRadar ref="ShaderToyRadarRef" v-if="activeMenuKey === 'ShaderToyRadar'"></ShaderToyRadar>
     <Noise ref="NoiseRef" v-if="activeMenuKey === 'Noise'"></Noise>
+    <ParticleWater ref="ParticleWaterRef" v-if="activeMenuKey === 'ParticleWater'"></ParticleWater>
   </div>
 </template>
 
@@ -38,6 +39,7 @@ import ShaderToyWater from "@/components/ShaderToy/ShaderToyWater.vue";
 import ShaderToyBox from "@/components/ShaderToy/ShaderToyBox.vue";
 import ShaderToyRadar from '@/components/ShaderToy/ShaderToyRadar.vue'
 import Noise from '@/components/ShaderToy/Noise.vue'
+import ParticleWater from "@/components/ParticleSystem/ParticleWater.vue";
 
 
 const containerRef = ref<HTMLDivElement>()
@@ -56,9 +58,10 @@ const ShaderToyWaterRef = ref(null)
 const ShaderToyBoxRef = ref(null)
 const ShaderToyRadarRef = ref(null)
 const NoiseRef = ref(null)
+const ParticleWaterRef = ref(null)
 const refsObj = {
   DigTerrianRef, GroundTransparentRef, AddModelRef, CzmlPowerRef, ModelAdjustRef, ModelMatrixRef,
-  LinePlaneIntersectRef,ShaderToyWaterRef,ShaderToyBoxRef,ShaderToyRadarRef,NoiseRef
+  LinePlaneIntersectRef,ShaderToyWaterRef,ShaderToyBoxRef,ShaderToyRadarRef,NoiseRef,ParticleWaterRef
 }
 let viewerLoaded = false
 let entity: any

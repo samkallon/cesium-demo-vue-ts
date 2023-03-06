@@ -226,7 +226,9 @@ const clear = () => {
       viewer.entities.remove(e)
     })
   }
-  drawObj.stopDraw()
+  if (drawObj){
+    drawObj.stopDraw()
+  }
 }
 
 init()
