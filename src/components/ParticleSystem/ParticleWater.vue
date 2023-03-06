@@ -178,18 +178,29 @@ const init = async () => {
   );
 
   viewer.scene.preUpdate.addEventListener(function (scene, time) {
-    particleSystem.modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(Cesium.Cartesian3.fromDegrees(120, 33, 50));
+    particleSystem.modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(
+        Cesium.Cartesian3.fromDegrees(120, 33, 10));
 
     // Account for any changes to the emitter model matrix.
     particleSystem.emitterModelMatrix = computeEmitterModelMatrix();
   });
-
+  const param = {
+    "longitude": 119.99894565,
+    "latitude": 32.99929378,
+    "height": 66.9584,
+    "heading": 57.007,
+    "pitch": -28.3078,
+    "roll": 360,
+    "cartersian": {"x": -2677217.8252257775, "y": 4637236.089027228, "z": 3453933.1816930654}
+  }
   viewer.camera.setView({
-    destination: Cesium.Cartesian3.fromDegrees(120, 33, 300),
-    orientation: {heading: 0, pitch: -90, roll: 0}
+    destination: new Cesium.Cartesian3(param.cartersian.x, param.cartersian.y, param.cartersian.z),
+    orientation: {
+      heading: Cesium.Math.toRadians(param.heading),
+      pitch: Cesium.Math.toRadians(param.pitch),
+      roll: Cesium.Math.toRadians(param.roll)
+    }
   })
-
-
 }
 
 
