@@ -91,7 +91,10 @@ onMounted(() => {
     }),
     msaaSamples: 2,
     selectionIndicator: false,
-    terrainProvider: Cesium.createWorldTerrain(),
+    terrainProvider: Cesium.createWorldTerrain({
+      requestWaterMask: true,
+      requestVertexNormals: true,
+    }),
     resolutionScale: 0.8,//默认值为1.0 调整画面精细度 越低 帧率越高
   })
   viewer.scene.globe.depthTestAgainstTerrain = true;
@@ -127,13 +130,38 @@ onMounted(() => {
       viewer.entities.remove(e)
     })
   }, Cesium.ScreenSpaceEventType.MIDDLE_CLICK,Cesium.KeyboardEventModifier.CTRL)
+
+
+  // 添加剪影效果
+  const stages = viewer.scene.postProcessStages;
+  const silhouette = stages.add(
+      Cesium.PostProcessStageLibrary.createSilhouetteStage()
+  );
+  silhouette.uniforms.color = Cesium.Color.LIME;
+  silhouette.enabled = true
+  let handlerSilhouette = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+  handlerSilhouette.setInputAction(function (movement) {
+    const pickedObject = viewer.scene.pick(movement.endPosition);
+    if (Cesium.defined(pickedObject)) {
+      silhouette.selected = [pickedObject.primitive];
+    } else {
+      silhouette.selected = [];
+    }
+  }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
 })
+
+
+
 
 watch(
     () => sysStore.$state.currentComponentKey,
     (newCurrentComponentKey, oldCurrentComponentKey) => {
       if (oldCurrentComponentKey) {
-        refsObj[oldCurrentComponentKey + 'Ref'].value.clear()
+        if (!refsObj[oldCurrentComponentKey + 'Ref'].value.clear){
+          console.log(oldCurrentComponentKey+ '的clear不存在!')
+        }else{
+          refsObj[oldCurrentComponentKey + 'Ref'].value.clear()
+        }
       }
       activeMenuKey.value = newCurrentComponentKey
     }
