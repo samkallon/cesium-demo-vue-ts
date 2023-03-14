@@ -102,7 +102,7 @@ let Entity: any
 const clear = () => {
   if (!viewer) return
   if (!Entity) return
-  viewer.scene.primitives.remove(Entity)
+    viewer.scene.primitives.removeAll()
 }
 
 const init = () => {

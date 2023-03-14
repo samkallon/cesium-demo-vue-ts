@@ -12,13 +12,16 @@
   "dependencies": {
     "@turf/boolean-clockwise": "^6.5.0",
     "ant-design-vue": "^3.2.15",
+    "cesiummeshvisualizer": "^1.0.2",
     "fancy-components": "^0.0.23",
     "pinia": "^2.0.18",
+    "three": "^0.150.1",
     "turf": "^3.0.14",
     "vue": "^3.2.37"
   },
   "devDependencies": {
     "@types/node": "^18.7.6",
+    "@types/three": "^0.149.0",
     "@vitejs/plugin-vue": "^3.0.3",
     "@vue/compiler-sfc": "^3.2.37",
     "cesium": "^1.103.0",
