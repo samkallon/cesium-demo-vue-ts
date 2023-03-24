@@ -9,6 +9,22 @@ export class CesiumUtils {
         this.viewer = options.viewer
     }
 
+    /**
+     * 根据系统复制的参数飞行
+     * @param params
+     */
+    flyByParams(cameraParam){
+        this.viewer.camera.flyTo({
+            destination: new Cesium.Cartesian3(cameraParam.cartersian.x, cameraParam.cartersian.y, cameraParam.cartersian.z),
+            orientation: {
+                heading: Cesium.Math.toRadians(cameraParam.heading),
+                pitch: Cesium.Math.toRadians(cameraParam.pitch),
+                roll: Cesium.Math.toRadians(cameraParam.roll)
+            },
+            duration:1.0
+        })
+    }
+
     //position_A绕position_B逆时针旋转angle度（角度）得到新点
     rotatedPointByAngle(position_A:Cartesian3, position_B:Cartesian3, angle:number) {
         //以B点为原点建立局部坐标系（东方向为x轴,北方向为y轴,垂直于地面为z轴），得到一个局部坐标到世界坐标转换的变换矩阵
