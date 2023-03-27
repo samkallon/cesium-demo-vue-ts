@@ -20,6 +20,7 @@
     <ParticleWater v-if="activeMenuKey === 'ParticleWater'" ref="ParticleWaterRef"></ParticleWater>
     <DynamicWall v-if="activeMenuKey === 'DynamicWall'" ref="DynamicWallRef"></DynamicWall>
     <WhiteModel v-if="activeMenuKey === 'WhiteModel'" ref="WhiteModelRef"></WhiteModel>
+    <WhiteModelBatchSingle v-if="activeMenuKey === 'WhiteModelBatchSingle'" ref="WhiteModelBatchSingleRef"></WhiteModelBatchSingle>
   </div>
 </template>
 
@@ -47,6 +48,7 @@ import Noise from '@/components/ShaderToy/Noise.vue'
 import ParticleWater from "@/components/ParticleSystem/ParticleWater.vue";
 import DynamicWall from "@/components/ShaderToy/DynamicWall.vue";
 import WhiteModel from '@/components/WhiteModel/WhiteModel.vue'
+import WhiteModelBatchSingle from '@/components/WhiteModel/WhiteModelBatchSingle.vue'
 
 
 const containerRef = ref<HTMLDivElement>()
@@ -68,10 +70,11 @@ const NoiseRef = ref(null)
 const ParticleWaterRef = ref(null)
 const DynamicWallRef = ref(null)
 const WhiteModelRef = ref(null)
+const WhiteModelBatchSingleRef = ref(null)
 const refsObj = {
   DigTerrianRef, GroundTransparentRef, AddModelRef, CzmlPowerRef, ModelAdjustRef, ModelMatrixRef,
   LinePlaneIntersectRef, ShaderToyWaterRef, ShaderToyBoxRef, ShaderToyRadarRef, NoiseRef, ParticleWaterRef,
-  DynamicWallRef, WhiteModelRef
+  DynamicWallRef, WhiteModelRef, WhiteModelBatchSingleRef
 }
 let viewerLoaded = false
 let entity: any

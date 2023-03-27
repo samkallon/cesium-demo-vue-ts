@@ -62,7 +62,10 @@
       <a-sub-menu>
         <template #title>白膜渲染</template>
         <a-menu-item key="WhiteModel">
-          白膜渲染
+          白膜渲染距离
+        </a-menu-item>
+        <a-menu-item key="WhiteModelBatchSingle">
+          白膜渲染动态
         </a-menu-item>
       </a-sub-menu>
       <a-sub-menu key="ParticleSystem">
