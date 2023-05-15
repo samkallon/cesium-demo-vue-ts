@@ -44,7 +44,7 @@ export default ({ mode: VITE_MODE }: { mode: string }) => {
 
   return defineConfig({
     root: './',
-    base:'/cesium-demo-vue-ts/',
+    base:'/cesiumdemo/',
     assetsInclude:['**/*.gltf'],
     build: {
       assetsDir: './',

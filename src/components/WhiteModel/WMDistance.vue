@@ -9,21 +9,20 @@ import {ref, watch} from 'vue'
 import {useSysStore} from '@/store/sys'
 import {message} from "ant-design-vue";
 import * as Cesium from 'cesium'
-import {CesiumUtils} from "@/core/cesiumUtils";
+import {CesiumUtils} from "@/core/cesiumUtils"
 
 
 let sysStore = useSysStore()
-const viewer = sysStore.$state.cesiumViewer
-const czUtil = new CesiumUtils({viewer})
+const czUtil = new CesiumUtils({viewer:window.viewer})
 let Primitive: any
 
 
 const clear = () => {
-  if (!viewer) return
-  viewer.scene.primitives.removeAll()
+  if (!window.window.viewer) return
+  window.viewer.scene.primitives.removeAll()
 }
 const init = async () => {
-  if (!viewer) return
+  if (!window.viewer) return
   clear()
 
 
@@ -46,7 +45,7 @@ const init = async () => {
 
 
 
-  viewer.scene.primitives.add(tileset);
+  window.viewer.scene.primitives.add(tileset);
   const initialPosition = Cesium.Cartesian3.fromDegrees(
     -74.01881302800248,
     40.69114333714821,
@@ -57,55 +56,49 @@ const init = async () => {
     -21.34390550872461,
     0.0716951918898415
   );
-  viewer.scene.camera.setView({
+  window.viewer.scene.camera.setView({
     destination: initialPosition,
     orientation: initialOrientation,
     endTransform: Cesium.Matrix4.IDENTITY,
   });
 
-  tileset.tileLoad.addEventListener(tile=>{
-    let content = tile.content;
-    content._model._customShader
+  const rotationMtr = getMoveMatrix4(new Cesium.Cartesian3(0,0,0),new Cesium.Cartesian3(100,0,500))
+  tileset.tileVisible.addEventListener(tile=>{
+    var content = tile.content;
+    var featuresLength = content.featuresLength;
+    for (var i = 0; i < featuresLength; i += 1) {
+      let feature = content.getFeature(i)
+      const height = feature.getProperty('Height')
+      let model = feature.content._model
+      if (height > 300){
+        model.modelMatrix = Cesium.Matrix4.multiply(model.modelMatrix,rotationMtr,model.modelMatrix)
+        model._customShader.fragmentShaderText =  `
+          // Color tiles by distance to the camera
+          void fragmentMain(FragmentInput fsInput, inout czm_modelMaterial material)
+          {
+              material.diffuse = vec3(1.0, 0.0, 0.0);
+              material.diffuse.g = -fsInput.attributes.positionEC.z / 1.0e4 * 2.;
+          }
+          `
+        model._shouldRegenerateShaders = true
+      }else{
+        //model.modelMatrix = Cesium.Matrix4.multiply(model.modelMatrix,rotationNorMtr,model.modelMatrix)
+      }
+      // model.scale = 2
+      // model._shouldRegenerateShaders = true
+    }
+
   })
 
-  // tileset.readyPromise.then(tile=>{
-  //   const modelList = []
-  //   const tileModelStack = []
-  //   tileModelStack.push(tile._root)
-  //   while (tileModelStack.length > 0){
-  //     const top = tileModelStack.pop()
-  //     if (top.children.length > 0){
-  //       tileModelStack.push(...top.children)
-  //       if (top._content){
-  //         modelList.push(top)
-  //       }
-  //     }else{
-  //       if (top._content){
-  //         modelList.push(top)
-  //       }
-  //     }
-  //   }
-  //   console.log(modelList)
-  // })
-
-
-
-  //
-  // function renderLoop(timestamp: any) {
-  //   aper.material.uniforms.iTime = timestamp / 1000;
-  //   requestAnimationFrame(renderLoop);
-  // }
-  //
-  // renderLoop();
-  //
-  // const startTime = performance.now();
-  // viewer.scene.postUpdate.addEventListener(function () {
-  //   const elapsedTimeSeconds = (performance.now() - startTime) / 1000;
-  //   customMaterial.uniforms.iTime = elapsedTimeSeconds;
-  // });
 
 }
-
+const getMoveMatrix4 = (position,offset) => {
+  const frompoint_to_world_matrix = Cesium.Transforms.eastNorthUpToFixedFrame(position); // Matrix4
+  const local_translation = offset; // 向模型中心为原点，正北为y，正东为x，地心朝上为z分别平移 310、-140、10米
+  const result = new Cesium.Cartesian3(0,0,0);
+  Cesium.Matrix4.multiplyByPoint(frompoint_to_world_matrix, local_translation, result); // 转换矩阵左乘局部平移向量，结果存储在 result 中，结果是世界坐标下的平移终点向量
+  return Cesium.Matrix4.fromTranslation(Cesium.Cartesian3.subtract(result,position,new Cesium.Cartesian3())); // 构造平移矩阵并赋值
+}
 
 init()
 

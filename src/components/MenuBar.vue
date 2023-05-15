@@ -17,9 +17,9 @@
       :theme="theme"
       style="width: 256px"
     >
-      <a-sub-menu>
+      <a-sub-menu key="Terrian">
         <template #title>地形</template>
-        <a-menu-item key="DigTerrian">
+        <a-menu-item key="Terrian-DigTerrian">
           地形开挖
         </a-menu-item>
         <a-menu-item key="">
@@ -32,45 +32,45 @@
           地形压平
         </a-menu-item>
       </a-sub-menu>
-      <a-sub-menu key="model">
+      <a-sub-menu key="Model">
         <template #title>模型调整</template>
-        <a-menu-item key="ModelMatrix">
+        <a-menu-item key="Model-ModelMatrix">
           数值调整
         </a-menu-item>
-        <a-menu-item key="ModelAdjust">
+        <a-menu-item key="Model-ModelAdjust">
           拖动调整
         </a-menu-item>
       </a-sub-menu>
       <a-sub-menu key="ShaderToy">
         <template #title>材质</template>
-        <a-menu-item key="ShaderToyWater">
+        <a-menu-item key="ShaderToy-ShaderToyWater">
           水面
         </a-menu-item>
-        <a-menu-item key="ShaderToyBox">
+        <a-menu-item key="ShaderToy-ShaderToyBox">
           光影盒子
         </a-menu-item>
-        <a-menu-item key="ShaderToyRadar">
+        <a-menu-item key="ShaderToy-ShaderToyRadar">
           雷达
         </a-menu-item>
-        <a-menu-item key="Noise">
+        <a-menu-item key="ShaderToy-Noise">
           噪声
         </a-menu-item>
-        <a-menu-item key="DynamicWall">
+        <a-menu-item key="ShaderToy-DynamicWall">
           动态墙体
         </a-menu-item>
       </a-sub-menu>
-      <a-sub-menu>
+      <a-sub-menu key="WhiteModel">
         <template #title>白膜渲染</template>
-        <a-menu-item key="WhiteModel">
+        <a-menu-item key="WhiteModel-WMDistance">
           白膜渲染距离
         </a-menu-item>
-        <a-menu-item key="WhiteModelBatchSingle">
+        <a-menu-item key="WhiteModel-WhiteModelBatchSingle">
           白膜渲染动态
         </a-menu-item>
       </a-sub-menu>
       <a-sub-menu key="ParticleSystem">
         <template #title>粒子系统</template>
-        <a-menu-item key="ParticleWater">
+        <a-menu-item key="ParticleSystem-ParticleWater">
           喷泉
         </a-menu-item>
       </a-sub-menu>
@@ -145,7 +145,7 @@ export default defineComponent({
     const state = reactive({
       mode: 'inline' as MenuMode,
       theme: 'dark' as MenuTheme,
-      selectedKeys: ['DigTerrian'],
+      selectedKeys: ['Terrian-DigTerrian'],
       openKeys: [''],
       bgColor: '#001529',
       fontColor: '#fff'
@@ -158,7 +158,10 @@ export default defineComponent({
       state.bgColor = checked ? '#001529' : '#fff'
       state.fontColor = !checked ? '#001529' : '#fff'
     };
-    watchEffect(() => sysStore.setCurrentComponentKey(state.selectedKeys[0]))
+    watchEffect(() => {
+      console.log(state.selectedKeys)
+      sysStore.setCurrentComponentKey(state.selectedKeys[0])
+    })
     return {
       ...toRefs(state),
       changeMode,
