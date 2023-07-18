@@ -15,7 +15,6 @@
 
 <script setup lang="ts">
 import * as Cesium from 'cesium'
-import {useSysStore} from '@/store/sys'
 import { message } from 'ant-design-vue';
 import { reactive } from 'vue'
 
@@ -23,8 +22,7 @@ const state = reactive(
     { longitude: 0,latitude: 0,height: 0,heading: 0,
       pitch:0,roll:0,mouseLongitude:0,mouseLatitude:0,
 })
-const sysStore = useSysStore()
-const viewer = sysStore.cesiumViewer
+const viewer = window.viewer
 let positionLatLng: any
 let handler
 if (viewer){

@@ -15,7 +15,7 @@ import {Cartesian3} from "cesium";
 
 
 let sysStore = useSysStore()
-const viewer = sysStore.$state.cesiumViewer
+const viewer = window.viewer
 let sourceModelMatrix: any
 let Entity: any
 let DebuggerEntity: any

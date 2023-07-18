@@ -2,7 +2,7 @@ import Cesium, {ArcGisMapServerImageryProvider, Viewer} from "cesium";
 import {message} from "ant-design-vue";
 
 const initMap = (id)=>{
-  Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3YzBkMDU4Zi00NjVhLTQ2YzgtODgxMS00ZDAzNzVmYjQyYTgiLCJpZCI6NDEzMTIsImlhdCI6MTYwOTk4ODQ2OX0.qtLMhWmf2R-psUzK2Piqh-qXtibvXhcX-vR1tjWGF6E'
+  Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIwMGRiNGQyMy1iYzk5LTQxMGYtYjQ2NC1mOTc1OGJjMTcwMzEiLCJpZCI6NDEzMTIsImlhdCI6MTY4NjAzODA3N30.TyhNCEbLc8CPmDbxG5bnZtOuDrJvBt9YRzccGut2p7g'
   const options = {
     animation: true, // 动画组件
     timeline: true, // 时间轴组件
@@ -18,12 +18,12 @@ const initMap = (id)=>{
     }),
     msaaSamples: 2,
     selectionIndicator: false,
-    // terrainProvider: Cesium.createWorldTerrain({
-    //   requestWaterMask: true,
-    //   requestVertexNormals: true,
-    // }),
+    terrainProvider: Cesium.createWorldTerrain({
+      requestWaterMask: true,
+      requestVertexNormals: true,
+    }),
     resolutionScale: 0.8,//默认值为1.0 调整画面精细度 越低 帧率越高
-    useDefaultRenderLoop: true, //关掉自动渲染 为了和three js 融合
+    // useDefaultRenderLoop: true, //关掉自动渲染 为了和three js 融合
   }
   const viewer = new Viewer(id || 'cesiumContainer', options)
   viewer.scene.globe.depthTestAgainstTerrain = true;
@@ -57,23 +57,6 @@ const initMap = (id)=>{
     })
   }, Cesium.ScreenSpaceEventType.MIDDLE_CLICK, Cesium.KeyboardEventModifier.CTRL)
 
-
-  // 添加剪影效果
-  const stages = viewer.scene.postProcessStages;
-  const silhouette = stages.add(
-    Cesium.PostProcessStageLibrary.createSilhouetteStage()
-  );
-  silhouette.uniforms.color = Cesium.Color.LIME;
-  silhouette.enabled = true
-  let handlerSilhouette = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
-  handlerSilhouette.setInputAction(function (movement) {
-    const pickedObject = viewer.scene.pick(movement.endPosition);
-    if (Cesium.defined(pickedObject)) {
-      silhouette.selected = [pickedObject.primitive];
-    } else {
-      silhouette.selected = [];
-    }
-  }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
 }
 
 export default initMap

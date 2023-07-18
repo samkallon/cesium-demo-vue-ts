@@ -8,9 +8,9 @@
 import {useSysStore} from '@/store/sys'
 import * as Cesium from 'cesium'
 
-
+debugger
 let sysStore = useSysStore()
-const viewer = sysStore.$state.cesiumViewer
+const viewer = window.viewer
 let Entity: any
 let polylineVolumnList = []
 
@@ -156,7 +156,7 @@ const init = async () => {
   viewer.timeline.zoomTo(start, stop);
   const particleSystem = viewer.scene.primitives.add(
       new Cesium.ParticleSystem({
-        image: "smoke.png",
+        image: "./smoke.png",
         startColor: Cesium.Color.fromCssColorString('rgba(11,199,255,0.84)'),
         endColor: Cesium.Color.WHITE.withAlpha(0.0),
         startScale: viewModel.startScale,

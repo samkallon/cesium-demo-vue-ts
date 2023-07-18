@@ -12,7 +12,7 @@ import * as Cesium from 'cesium'
 
 
 let sysStore = useSysStore()
-const viewer = sysStore.$state.cesiumViewer
+const viewer = window.viewer
 let Entity: any
 
 

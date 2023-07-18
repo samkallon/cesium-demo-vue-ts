@@ -95,7 +95,7 @@ let resizeX = ref<any>(1);
 let resizeY = ref<any>(1);
 let resizeZ = ref<any>(1);
 let sysStore = useSysStore()
-const viewer = sysStore.$state.cesiumViewer
+const viewer = window.viewer
 let sourceModelMatrix: any
 let Entity: any
 

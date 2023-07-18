@@ -23,7 +23,7 @@ let drawObj:any
 let inv = null // 变换矩阵
 let transform:Matrix4 // 回归向量
 const sysStore = useSysStore()
-const viewer = sysStore.cesiumViewer
+const viewer = window.viewer
 
 const line1 = [
   {

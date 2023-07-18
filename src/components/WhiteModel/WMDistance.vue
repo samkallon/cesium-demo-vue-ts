@@ -24,45 +24,60 @@ const clear = () => {
 const init = async () => {
   if (!window.viewer) return
   clear()
-
-
-  const shader1 = `
-      // Color tiles by distance to the camera
-      void fragmentMain(FragmentInput fsInput, inout czm_modelMaterial material)
-      {
-          material.diffuse = vec3(0.0, 0.0, 1.0);
-          material.diffuse.g = -fsInput.attributes.positionEC.z / 1.0e4 * 2.;
-      }
-      `
-
-  const tileset = new Cesium.Cesium3DTileset({
-    url: Cesium.IonResource.fromAssetId(75343),
-    customShader: new Cesium.CustomShader({
-      lightingModel: Cesium.LightingModel.UNLIT,
-      fragmentShaderText: shader1,
-    }),
-  });
-
-
-
+  const tileset =new Cesium.Cesium3DTileset({
+      url: 'http://124.70.11.35/fc-house/tileset.json'
+    });
   window.viewer.scene.primitives.add(tileset);
-  const initialPosition = Cesium.Cartesian3.fromDegrees(
-    -74.01881302800248,
-    40.69114333714821,
-    753
-  );
-  const initialOrientation = new Cesium.HeadingPitchRoll.fromDegrees(
-    21.27879878293835,
-    -21.34390550872461,
-    0.0716951918898415
-  );
-  window.viewer.scene.camera.setView({
-    destination: initialPosition,
-    orientation: initialOrientation,
-    endTransform: Cesium.Matrix4.IDENTITY,
-  });
+  window.viewer.flyTo(tileset)
 
-  const rotationMtr = getMoveMatrix4(new Cesium.Cartesian3(0,0,0),new Cesium.Cartesian3(100,0,500))
+
+  // const shader1 = `
+  //     // Color tiles by distance to the camera
+  //     void fragmentMain(FragmentInput fsInput, inout czm_modelMaterial material)
+  //     {
+  //         material.diffuse = vec3(0.0, 0.0, 1.0);
+  //         material.diffuse.g = -fsInput.attributes.positionEC.z / 1.0e4 * 2.;
+  //     }
+  //     `
+  //
+  // const tileset = new Cesium.Cesium3DTileset({
+  //   url: Cesium.IonResource.fromAssetId(75343),
+  //   customShader: new Cesium.CustomShader({
+  //     lightingModel: Cesium.LightingModel.UNLIT,
+  //     fragmentShaderText: shader1,
+  //   }),
+  // });
+  //
+  //
+  //
+  // window.viewer.scene.primitives.add(tileset);
+  // const initialPosition = Cesium.Cartesian3.fromDegrees(
+  //   -74.01881302800248,
+  //   40.69114333714821,
+  //   753
+  // );
+  // const initialOrientation = new Cesium.HeadingPitchRoll.fromDegrees(
+  //   21.27879878293835,
+  //   -21.34390550872461,
+  //   0.0716951918898415
+  // );
+  // window.viewer.scene.camera.setView({
+  //   destination: initialPosition,
+  //   orientation: initialOrientation,
+  //   endTransform: Cesium.Matrix4.IDENTITY,
+  // });
+  //
+  // const rotationMtr = getMoveMatrix4(new Cesium.Cartesian3(0,0,0),new Cesium.Cartesian3(10,0,100))
+  const rotationMtr = Cesium.Matrix4.fromRotationTranslation(Cesium.Matrix3.fromRotationX(Cesium.Math.toRadians(10)))
+
+  let handler = new Cesium.ScreenSpaceEventHandler(window.viewer.scene.canvas);
+  handler.setInputAction(function (movement) {
+    let position = movement.position;
+    var pickModel = window.viewer.scene.pick(position);
+    let model = pickModel.content._model
+    model.modelMatrix = Cesium.Matrix4.multiply(model.modelMatrix,rotationMtr,model.modelMatrix)
+    // _this.judgeMmouseOnModelOrTerr(position, viewer);
+  }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
   tileset.tileVisible.addEventListener(tile=>{
     var content = tile.content;
     var featuresLength = content.featuresLength;

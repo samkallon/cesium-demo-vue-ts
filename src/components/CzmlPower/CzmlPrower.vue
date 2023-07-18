@@ -12,7 +12,7 @@ import * as Cesium from 'cesium'
 import czml from './czml'
 
 const sysStore = useSysStore()
-const viewer = sysStore.$state.cesiumViewer
+const viewer = window.viewer
 
 let positionProperty: any
 let Entity: any

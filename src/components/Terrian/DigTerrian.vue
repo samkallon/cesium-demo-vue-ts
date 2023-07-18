@@ -32,7 +32,7 @@ export default defineComponent({
     let drawObj:any
     let entity:any
     let viewer:any
-    viewer = sysStore.cesiumViewer
+    viewer = window.viewer
 
     if (viewer) {
       const longitude = -3.82518;
@@ -75,12 +75,12 @@ export default defineComponent({
       console.log('Success:', values);
     };
     const startDraw = () => {
-      drawObj = new Draw({viewer:sysStore.cesiumViewer,Cesium,type:'polygon'})
+      drawObj = new Draw({viewer:window.viewer,Cesium,type:'polygon'})
     }
     const startDig = () => {
       const points =  drawObj.tempShapePoints
       if (!terrainClipPlan){
-        terrainClipPlan = new TerrainClipPlan(sysStore.cesiumViewer,{
+        terrainClipPlan = new TerrainClipPlan(window.viewer,{
           height: formState.depth,
           splitNum: 1000,
           bottomImg: 'bottom.jpg',

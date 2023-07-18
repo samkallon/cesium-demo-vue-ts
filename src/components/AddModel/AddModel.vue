@@ -12,7 +12,7 @@ import * as Cesium from 'cesium'
 import {Cartesian3} from "cesium";
 import {CesiumUtils} from "@/core/cesiumUtils";
 const sysStore = useSysStore()
-const viewer = sysStore.$state.cesiumViewer
+const viewer = window.viewer
 const cesiumUtils = new CesiumUtils(viewer)
 let DIC:any
 let tileset:any

@@ -13,7 +13,7 @@ export class CesiumUtils {
      * 根据系统复制的参数飞行
      * @param params
      */
-    flyByParams(cameraParam){
+    flyByParams(cameraParam:any){
         this.viewer.camera.flyTo({
             destination: new Cesium.Cartesian3(cameraParam.cartersian.x, cameraParam.cartersian.y, cameraParam.cartersian.z),
             orientation: {

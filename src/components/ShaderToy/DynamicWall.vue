@@ -13,7 +13,7 @@ import {CesiumUtils} from "@/core/cesiumUtils";
 
 
 let sysStore = useSysStore()
-const viewer = sysStore.$state.cesiumViewer
+const viewer = window.viewer
 const czUtil = new CesiumUtils({viewer})
 let Primitive: any
 

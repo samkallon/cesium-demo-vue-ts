@@ -22,7 +22,7 @@ const layout = {
   labelCol: {span: 8},
   wrapperCol: {span: 16},
 };
-const viewer = sysStore.$state.cesiumViewer
+const viewer = window.viewer
 let entity: any
 const formState = reactive({
   transparent: 1,
